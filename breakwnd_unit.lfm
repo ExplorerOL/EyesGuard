@@ -1,0 +1,54 @@
+object BreakWnd: TBreakWnd
+  Left = 167
+  Height = 448
+  Top = 125
+  Width = 728
+  BorderStyle = bsNone
+  Caption = 'BreakWnd'
+  ClientHeight = 448
+  ClientWidth = 728
+  Color = clBlack
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'MS Sans Serif'
+  FormStyle = fsStayOnTop
+  OnShow = FormShow
+  LCLVersion = '1.0.1.3'
+  Visible = True
+  WindowState = wsMaximized
+  object BreakLabel1: TLabel
+    Left = 0
+    Height = 209
+    Top = 0
+    Width = 728
+    Align = alTop
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'ПЕРЕРЫВ!!!'
+    Font.CharSet = RUSSIAN_CHARSET
+    Font.Color = clLime
+    Font.Height = -39
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    Layout = tlBottom
+    ParentColor = False
+    ParentFont = False
+  end
+  object BreakLabel2: TLabel
+    Left = 0
+    Height = 223
+    Top = 209
+    Width = 728
+    Align = alTop
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Дай своим глазам отдохнуть!'
+    Font.CharSet = RUSSIAN_CHARSET
+    Font.Color = clYellow
+    Font.Height = -30
+    Font.Name = 'Arial'
+    Layout = tlCenter
+    ParentColor = False
+    ParentFont = False
+  end
+end
