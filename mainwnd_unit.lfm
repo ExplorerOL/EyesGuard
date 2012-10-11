@@ -1,16 +1,16 @@
 object MainWnd: TMainWnd
   Left = 539
-  Height = 294
-  Top = 206
-  Width = 374
+  Height = 387
+  Top = 113
+  Width = 370
   HorzScrollBar.Visible = False
   ActiveControl = ButCancel
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'EyesGuard v2.14'
-  ClientHeight = 294
-  ClientWidth = 374
+  ClientHeight = 387
+  ClientWidth = 370
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -16
@@ -153,13 +153,14 @@ object MainWnd: TMainWnd
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
-  OnShow = FormShow
+  OnClose = FormClose
+  OnCreate = FormCreate
   LCLVersion = '1.0.1.3'
   object OptionsLabel: TLabel
     Left = 0
     Height = 30
     Top = 0
-    Width = 374
+    Width = 370
     Align = alTop
     Alignment = taCenter
     Caption = 'Настройки'
@@ -171,26 +172,18 @@ object MainWnd: TMainWnd
     ParentFont = False
   end
   object TimeWorkLabel: TLabel
-    Left = 32
+    Left = 24
     Height = 21
-    Top = 43
-    Width = 244
-    Caption = 'Время между перерывами (мин)'
-    ParentColor = False
-  end
-  object TimeBreakLabel: TLabel
-    Left = 32
-    Height = 21
-    Top = 86
-    Width = 234
-    Caption = 'Длительность перерыва (мин)'
+    Top = 48
+    Width = 201
+    Caption = 'Время между перерывами'
     ParentColor = False
   end
   object InfoLabel: TLabel
     Left = 0
     Height = 14
-    Top = 280
-    Width = 374
+    Top = 373
+    Width = 370
     Align = alBottom
     Alignment = taCenter
     Caption = ' Автор: Воробьев Дмитрий и др. www.eyesguard.org   ©2012. GNU GPL.'
@@ -203,9 +196,9 @@ object MainWnd: TMainWnd
     WordWrap = True
   end
   object Image1: TImage
-    Left = 288
+    Left = 295
     Height = 57
-    Top = 160
+    Top = 252
     Width = 57
     Picture.Data = {
       07544269746D617036C00000424D36C000000000000036000000280000008000
@@ -1753,83 +1746,206 @@ object MainWnd: TMainWnd
     Transparent = True
   end
   object TimeWorkEdit: TEdit
-    Left = 312
+    Left = 232
     Height = 28
-    Top = 40
+    Top = 48
     Width = 40
     AutoSelect = False
     MaxLength = 3
+    OnChange = TimeWorkEditChange
     TabOrder = 0
     Text = '30'
   end
-  object TimeBreakEdit: TEdit
-    Left = 312
-    Height = 28
-    Top = 83
-    Width = 40
-    AutoSelect = False
-    MaxLength = 3
-    TabOrder = 1
-    Text = '10'
-  end
   object ButCancel: TButton
-    Left = 185
+    Left = 192
     Height = 35
-    Top = 232
+    Top = 324
     Width = 80
     Caption = 'Отмена'
-    TabOrder = 2
+    TabOrder = 1
   end
   object ButApply: TButton
-    Left = 67
+    Left = 74
     Height = 35
-    Top = 232
+    Top = 324
     Width = 110
     Caption = 'Применить'
     Enabled = False
-    TabOrder = 3
+    TabOrder = 2
   end
   object ButExit: TButton
-    Left = 290
+    Left = 297
     Height = 35
-    Top = 232
+    Top = 324
     Width = 66
     Caption = 'Выход'
-    TabOrder = 4
+    TabOrder = 3
   end
   object CheckSound: TCheckBox
-    Left = 15
+    Left = 22
     Height = 24
-    Top = 158
+    Top = 250
     Width = 187
     Caption = 'Звуковое оповещение'
     Checked = True
     State = cbChecked
-    TabOrder = 5
+    TabOrder = 4
   end
   object CheckOff: TCheckBox
-    Left = 15
+    Left = 22
     Height = 24
-    Top = 192
+    Top = 284
     Width = 106
     Caption = 'Выключить'
-    TabOrder = 6
+    TabOrder = 5
   end
   object CheckEnMonOff: TCheckBox
-    Left = 15
+    Left = 22
     Height = 24
-    Top = 124
+    Top = 216
     Width = 330
     Caption = 'Выключать  монитор на время перерыва'
-    TabOrder = 7
+    TabOrder = 6
   end
   object ButOK: TButton
-    Left = 9
+    Left = 16
     Height = 35
-    Top = 232
+    Top = 324
     Width = 48
     Caption = 'OK'
+    TabOrder = 7
+  end
+  object TimeRemindLabel: TLabel
+    Left = 24
+    Height = 21
+    Top = 128
+    Width = 100
+    Caption = 'Напоминать:'
+    ParentColor = False
+  end
+  object TimeRemindNoComboBox: TComboBox
+    Left = 152
+    Height = 28
+    Top = 128
+    Width = 36
+    ItemHeight = 20
+    OnChange = TimeRemindNoComboBoxChange
     TabOrder = 8
+    Text = '1'
+  end
+  object TimeRemindLabel1: TLabel
+    Left = 200
+    Height = 21
+    Top = 128
+    Width = 18
+    Caption = 'за'
+    ParentColor = False
+  end
+  object TimeBreakLabel: TLabel
+    Left = 24
+    Height = 21
+    Top = 88
+    Width = 191
+    Caption = 'Длительность перерыва'
+    ParentColor = False
+  end
+  object TimeBreakEdit: TEdit
+    Left = 232
+    Height = 28
+    Top = 88
+    Width = 40
+    AutoSelect = False
+    MaxLength = 3
+    TabOrder = 9
+    Text = '10'
+  end
+  object TimeRemindEdit: TEdit
+    Left = 232
+    Height = 28
+    Top = 128
+    Width = 40
+    AutoSelect = False
+    MaxLength = 3
+    TabOrder = 10
+    Text = '10'
+  end
+  object TimeUpdateLabel: TLabel
+    Left = 24
+    Height = 21
+    Top = 168
+    Width = 161
+    Caption = 'Частота обновления'
+    ParentColor = False
+  end
+  object TimeUpdateEdit: TEdit
+    Left = 232
+    Height = 28
+    Top = 168
+    Width = 40
+    AutoSelect = False
+    MaxLength = 3
+    TabOrder = 11
+    Text = '10'
+  end
+  object TimeWorkSelect: TComboBox
+    Left = 295
+    Height = 28
+    Top = 48
+    Width = 53
+    ItemHeight = 20
+    ItemIndex = 0
+    Items.Strings = (
+      'мин'
+      'сек'
+    )
+    OnChange = TimeRemindNoComboBoxChange
+    TabOrder = 12
+    Text = 'мин'
+  end
+  object TimeBreakSelect: TComboBox
+    Left = 295
+    Height = 28
+    Top = 88
+    Width = 53
+    ItemHeight = 20
+    ItemIndex = 0
+    Items.Strings = (
+      'мин'
+      'сек'
+    )
+    OnChange = TimeRemindNoComboBoxChange
+    TabOrder = 13
+    Text = 'мин'
+  end
+  object TimeRemindSelect: TComboBox
+    Left = 295
+    Height = 28
+    Top = 128
+    Width = 53
+    ItemHeight = 20
+    ItemIndex = 0
+    Items.Strings = (
+      'мин'
+      'сек'
+    )
+    OnChange = TimeRemindNoComboBoxChange
+    TabOrder = 14
+    Text = 'мин'
+  end
+  object TimeUpdateSelect: TComboBox
+    Left = 295
+    Height = 28
+    Top = 168
+    Width = 53
+    ItemHeight = 20
+    ItemIndex = 0
+    Items.Strings = (
+      'мин'
+      'сек'
+    )
+    OnChange = TimeRemindNoComboBoxChange
+    TabOrder = 15
+    Text = 'мин'
   end
   object TrayIcon: TTrayIcon
     PopUpMenu = MainPopupMenu
@@ -2007,6 +2123,7 @@ object MainWnd: TMainWnd
     }
     Hint = 'EyesGuard'
     Visible = True
+    OnClick = TrayIconClick
     left = 16
     top = 8
   end

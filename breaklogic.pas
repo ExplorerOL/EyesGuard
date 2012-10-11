@@ -6,99 +6,117 @@ interface
 
 uses
   Classes, SysUtils, Forms,
-  MainWnd_Unit, BreakWnd_Unit, Settings, Logger;
-
-type
-  TIOPolicy = record
-    createNonExistingFile: boolean;
-    rewriteCorruptedFile: boolean;
-  end;
-
-const
-  DefaultIOPolicy: TIOPolicy = (
-    createNonExistingFile: False;
-    rewriteCorruptedFile: False;
-    );
-
-const
-  DefaultSettingsFileName = 'set.dat';
+  MainWnd_Unit, BreakWnd_Unit, Settings, Logger, EventHandler;
 
 type
   TBreakManager = class
-    constructor Create(var aMainWnd: TMainWnd);
-    constructor Create(var aMainWnd: TMainWnd; var aLogger: TLogger;
-      aSettingsFileName: string; const aIOPolicy: TIOPolicy);
+    constructor Create();
+    constructor Create(var aLogger: TLogger; aSettingsFileName: string; const aIOPolicy: TIOPolicy);
 
   public
 
   private
     Settings: TBreakSettings;
+    SettingsFileName: string;
+    CanOverwriteSettings: boolean;
     Logger: TLogger;
     IOPolicy: TIOPolicy;
     MainWnd: TMainWnd;
 
-    procedure readSettings(aSettingsFileName: string);
+    procedure readSettings();
+    procedure writeSettings();
+    procedure openSettings();
+    procedure StartWork();
   end;
 
 implementation
 
-constructor TBreakManager.Create(var aMainWnd: TMainWnd);
+constructor TBreakManager.Create();
 var
   l: TLogger;
 begin
-  l := TLogger.Create(False, True);
-  Create(aMainWnd, l, DefaultSettingsFileName, DefaultIOPolicy);
+  l := TLogger.Create(True, False);
+  Create(l, DefaultSettingsFileName, DefaultIOPolicy);
 end;
 
-constructor TBreakManager.Create(var aMainWnd: TMainWnd; var aLogger: TLogger;
-  aSettingsFileName: string; const aIOPolicy: TIOPolicy);
+constructor TBreakManager.Create(var aLogger: TLogger; aSettingsFileName: string; const aIOPolicy: TIOPolicy);
 begin
   Logger := aLogger;
   IOPolicy := aIOPolicy;
-  MainWnd := aMainWnd;
-  readSettings(aSettingsFileName);
-  MainWnd.TrayImageList.GetIcon(1, MainWnd.TrayIcon.Icon);
+  SettingsFileName := aSettingsFileName;
+  readSettings();
+  Application.ShowMainForm:=false;
+  Application.CreateForm(TMainWnd, MainWnd);
+  MainWnd.ActionsOnShow:=TSimpleEventList.Create(@self.openSettings);
 end;
 
-procedure TBreakManager.readSettings(aSettingsFileName: string);
+procedure TBreakManager.openSettings();
+begin
+  MainWnd.setSettings(Settings);
+  MainWnd.Left := Screen.Width - MainWnd.Width - 100;
+  MainWnd.Top := Screen.Height - MainWnd.Height - 100;
+  MainWnd.ButApply.Enabled:=False;
+  MainWnd.Show;
+end;
+
+procedure TBreakManager.StartWork();
+begin
+  MainWnd.Timer.Enabled := False;
+  MainWnd.Timer.Interval := Settings.TimeBreak - Settings.TimeRemind[1];
+end;
+
+procedure TBreakManager.writeSettings();
+var
+  fout: file of TBreakSettings;
+begin
+  if CanOverwriteSettings then
+  begin
+    Logger.Log('Writing settings.');
+    AssignFile(fout, SettingsFileName);
+    Rewrite(fout);
+    Write(fout, Settings);
+    CloseFile(fout);
+  end else begin
+    Logger.Log('Cannot write setting: disallowed by IOPolicy.');
+  end;
+end;
+
+procedure TBreakManager.readSettings();
 var
   fin: file of TBreakSettings;
 begin
-  Logger.Log('Setting file given: ''' + aSettingsFileName + '''.');
-  AssignFile(fin, aSettingsFileName);
-  if FileExists(aSettingsFileName) then begin
+  Logger.Log('Readind setting from file: ''' + SettingsFileName + '''.');
+  AssignFile(fin, SettingsFileName);
+  if FileExists(SettingsFileName) then
+  begin
     Logger.Log('File found. Trying to read.');
     Reset(fin);
-    if not EOF(fin) then begin
+    if not EOF(fin) then
+    begin
       Read(fin, Settings);
       CloseFile(fin);
-      Logger.Log('File is successfully read.');
+      if CheckSettings(Settings) then
+      begin
+        Logger.Log('File is successfully read.');
+        CanOverwriteSettings := IOPolicy.rewriteGoodFile;
+      end else begin
+        Logger.Log('File contains invalid data. Default settings are used.');
+        Settings := DefaultSettings;
+        CanOverwriteSettings := IOPolicy.rewriteCorruptedFile;
+      end;
     end else begin
       CloseFile(fin);
-      if IOPolicy.rewriteCorruptedFile then begin
-        Logger.Log(
-          'Setting file corrupted. Default settings are used. File will be overwritten if nessesary.');
-        Rewrite(fin);
-        Write(fin, DefaultSettings);
-        CloseFile(fin);
-        Settings := DefaultSettings;
-      end else begin
-        Logger.Log(
-          'Setting file corrupted. Default settings are used. File will not be overwritten.');
-        Settings := DefaultSettings;
-      end;
+      Logger.Log('File is corrupted. Default settings are used.');
+      Settings := DefaultSettings;
+      CanOverwriteSettings := IOPolicy.rewriteCorruptedFile;
     end;
   end else begin
-    if IOPolicy.createNonExistingFile then begin
-      Logger.Log('File not found. It will be created. Default settings will be used.');
-      Rewrite(fin);
-      Write(fin, DefaultSettings);
-      CloseFile(fin);
-      Settings := DefaultSettings;
-    end else begin
-      Logger.Log('File not found. It will not be created. Default settings will be used.');
-      Settings := DefaultSettings;
-    end;
+    Logger.Log('File not found. Default settings will be used.');
+    Settings := DefaultSettings;
+    CanOverwriteSettings := IOPolicy.createNonExistingFile;
+  end;
+  if not CanOverwriteSettings then begin
+    Logger.Log('Setting IOPolicy: File will not be overwritten.');
   end;
 end;
 

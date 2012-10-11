@@ -2,24 +2,26 @@ program EyesGuard;
 
 {$mode objfpc}{$H+}
 
+{$APPTYPE CONSOLE}
+
 uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads, {$ENDIF} {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  BreakWnd_Unit,
+  //BreakWnd_Unit,
   MainWnd_Unit,
-  BreakLogic { you can add units after this };
+  BreakLogic,
+  EventHandler
+  { you can add units after this };
 
 {$R *.res}
 
 var
   BreakManager: TBreakManager;
-  MainWnd: TMainWnd;
 
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
-  Application.CreateForm(TMainWnd, MainWnd);
-  BreakManager := TBreakManager.Create(MainWnd);
+  BreakManager := TBreakManager.Create();
   Application.Run;
 end.

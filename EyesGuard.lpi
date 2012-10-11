@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="8">
       <Unit0>
         <Filename Value="EyesGuard.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -77,6 +77,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Constants"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="eventhandler.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="EventHandler"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
