@@ -26,6 +26,7 @@ type
     procedure readSettings();
     procedure writeSettings();
     procedure openSettings();
+    procedure saveSettings();
     procedure StartWork();
   end;
 
@@ -36,10 +37,12 @@ var
   l: TLogger;
 begin
   l := TLogger.Create(True, False);
-  Create(l, DefaultSettingsFileName, DefaultIOPolicy);
+  Create(l, DefaultSettingsFileName, IOPolicyStandard);
 end;
 
 constructor TBreakManager.Create(var aLogger: TLogger; aSettingsFileName: string; const aIOPolicy: TIOPolicy);
+var
+  onSave: TSimpleEventList;
 begin
   Logger := aLogger;
   IOPolicy := aIOPolicy;
@@ -48,6 +51,10 @@ begin
   Application.ShowMainForm:=false;
   Application.CreateForm(TMainWnd, MainWnd);
   MainWnd.ActionsOnShow:=TSimpleEventList.Create(@self.openSettings);
+  onSave:=TSimpleEventList.Create();
+  onSave.add(@self.saveSettings);
+  onSave.add(@self.writeSettings);
+  MainWnd.ActionsOnSave:=onSave;
 end;
 
 procedure TBreakManager.openSettings();
@@ -59,8 +66,15 @@ begin
   MainWnd.Show;
 end;
 
+procedure TBreakManager.saveSettings();
+begin
+  Settings:=MainWnd.getSettings();
+  MainWnd.setSettings(Settings);
+end;
+
 procedure TBreakManager.StartWork();
 begin
+  Logger.Log('Starting work.');
   MainWnd.Timer.Enabled := False;
   MainWnd.Timer.Interval := Settings.TimeBreak - Settings.TimeRemind[1];
 end;

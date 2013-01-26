@@ -41,17 +41,47 @@ type
   end;
 
 const
-  DefaultIOPolicy: TIOPolicy = (
+  IOPolicyConservative: TIOPolicy = (
     createNonExistingFile: False;
     rewriteCorruptedFile: False;
     rewriteGoodFile: False;
     );
+  IOPolicyStandard: TIOPolicy = (
+    createNonExistingFile: True;
+    rewriteCorruptedFile: False;
+    rewriteGoodFile: True;
+    );
 
-function CheckSettings(s: TBreakSettings): boolean;
+function checkSettings(s: TBreakSettings): boolean;
+function calcMeasurement(time: Cardinal): Integer;
+function measurementCoeff(unitNum: Integer): Integer;
 
 implementation
 
-function CheckSettings(s: TBreakSettings): boolean;
+function calcMeasurement(time: Cardinal): Integer;
+var
+  i:integer;
+begin
+  if time<1000 then begin
+    Result:=1;
+  end else if time<60000 then begin
+    Result:=2
+  end else begin
+    Result:=3;
+  end;
+end;
+
+function measurementCoeff(unitNum: Integer): Integer;
+begin
+  case unitNum of
+    1: Result:=1;
+    2: Result:=MSecsPerSec;
+    3: Result:=SecsPerMin*MSecsPerSec;
+    else halt;
+  end;
+end;
+
+function checkSettings(s: TBreakSettings): boolean;
 var
   i:integer;
 begin
