@@ -11,8 +11,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   //BreakWnd_Unit,
   MainWnd_Unit,
   BreakLogic,
-  EventHandler
-  { you can add units after this };
+  EventHandler { you can add units after this };
 
 {$R *.res}
 

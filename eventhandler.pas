@@ -9,6 +9,7 @@ uses
 
 type
   TSimpleEvent = procedure() of object;
+
   TSimpleEventList = class
     List: array of TSimpleEvent;
 
@@ -33,21 +34,20 @@ end;
 
 procedure TSimpleEventList.executeAll();
 var
-  i:integer;
+  i: integer;
 begin
-  for i:=0 to Length(List)-1 do begin
+  for i := 0 to Length(List) - 1 do begin
     List[i]();
   end;
 end;
 
 procedure TSimpleEventList.add(event: TSimpleEvent);
 var
-  n:integer;
+  n: integer;
 begin
   n := Length(List);
-  SetLength(List, n+1);
+  SetLength(List, n + 1);
   List[n] := event;
 end;
 
 end.
-

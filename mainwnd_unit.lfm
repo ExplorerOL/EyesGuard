@@ -1878,7 +1878,7 @@ object MainWnd: TMainWnd
     TabOrder = 10
     Text = '10'
   end
-  object TimeUpdateLabel: TLabel
+  object TimeStepLabel: TLabel
     Left = 24
     Height = 21
     Top = 168
@@ -1886,14 +1886,14 @@ object MainWnd: TMainWnd
     Caption = 'Частота обновления'
     ParentColor = False
   end
-  object TimeUpdateEdit: TEdit
+  object TimeStepEdit: TEdit
     Left = 232
     Height = 28
     Top = 168
     Width = 40
     AutoSelect = False
     MaxLength = 3
-    OnChange = TimeUpdateEditChange
+    OnChange = TimeStepEditChange
     TabOrder = 11
     Text = '10'
   end
@@ -1940,7 +1940,7 @@ object MainWnd: TMainWnd
     TabOrder = 14
     Text = 'мин'
   end
-  object TimeUpdateSelect: TComboBox
+  object TimeStepSelect: TComboBox
     Left = 295
     Height = 28
     Top = 168

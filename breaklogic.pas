@@ -37,7 +37,7 @@ var
   l: TLogger;
 begin
   l := TLogger.Create(True, False);
-  Create(l, DefaultSettingsFileName, IOPolicyStandard);
+  Create(l, DEFAULT_SETTINGS_FILENAME, IOPolicyStandard);
 end;
 
 constructor TBreakManager.Create(var aLogger: TLogger; aSettingsFileName: string; const aIOPolicy: TIOPolicy);
@@ -48,13 +48,13 @@ begin
   IOPolicy := aIOPolicy;
   SettingsFileName := aSettingsFileName;
   readSettings();
-  Application.ShowMainForm:=false;
+  Application.ShowMainForm := False;
   Application.CreateForm(TMainWnd, MainWnd);
-  MainWnd.ActionsOnShow:=TSimpleEventList.Create(@self.openSettings);
-  onSave:=TSimpleEventList.Create();
+  MainWnd.actionsOnShow := TSimpleEventList.Create(@self.openSettings);
+  onSave := TSimpleEventList.Create();
   onSave.add(@self.saveSettings);
   onSave.add(@self.writeSettings);
-  MainWnd.ActionsOnSave:=onSave;
+  MainWnd.actionsOnSave := onSave;
 end;
 
 procedure TBreakManager.openSettings();
@@ -62,13 +62,13 @@ begin
   MainWnd.setSettings(Settings);
   MainWnd.Left := Screen.Width - MainWnd.Width - 100;
   MainWnd.Top := Screen.Height - MainWnd.Height - 100;
-  MainWnd.ButApply.Enabled:=False;
+  MainWnd.ButApply.Enabled := False;
   MainWnd.Show;
 end;
 
 procedure TBreakManager.saveSettings();
 begin
-  Settings:=MainWnd.getSettings();
+  Settings := MainWnd.getSettings();
   MainWnd.setSettings(Settings);
 end;
 
@@ -83,14 +83,14 @@ procedure TBreakManager.writeSettings();
 var
   fout: file of TBreakSettings;
 begin
-  if CanOverwriteSettings then
-  begin
+  if CanOverwriteSettings then begin
     Logger.Log('Writing settings.');
     AssignFile(fout, SettingsFileName);
     Rewrite(fout);
     Write(fout, Settings);
     CloseFile(fout);
-  end else begin
+  end
+  else begin
     Logger.Log('Cannot write setting: disallowed by IOPolicy.');
   end;
 end;
@@ -101,30 +101,30 @@ var
 begin
   Logger.Log('Readind setting from file: ''' + SettingsFileName + '''.');
   AssignFile(fin, SettingsFileName);
-  if FileExists(SettingsFileName) then
-  begin
+  if FileExists(SettingsFileName) then begin
     Logger.Log('File found. Trying to read.');
     Reset(fin);
-    if not EOF(fin) then
-    begin
+    if not EOF(fin) then begin
       Read(fin, Settings);
       CloseFile(fin);
-      if CheckSettings(Settings) then
-      begin
+      if CheckSettings(Settings) then begin
         Logger.Log('File is successfully read.');
         CanOverwriteSettings := IOPolicy.rewriteGoodFile;
-      end else begin
+      end
+      else begin
         Logger.Log('File contains invalid data. Default settings are used.');
         Settings := DefaultSettings;
         CanOverwriteSettings := IOPolicy.rewriteCorruptedFile;
       end;
-    end else begin
+    end
+    else begin
       CloseFile(fin);
       Logger.Log('File is corrupted. Default settings are used.');
       Settings := DefaultSettings;
       CanOverwriteSettings := IOPolicy.rewriteCorruptedFile;
     end;
-  end else begin
+  end
+  else begin
     Logger.Log('File not found. Default settings will be used.');
     Settings := DefaultSettings;
     CanOverwriteSettings := IOPolicy.createNonExistingFile;

@@ -21,101 +21,138 @@ type
   { TMainWnd }
 
   TMainWnd = class(TForm)
-    TimeRemindSelect: TComboBox;
-    TimeRemindLabel1: TLabel;
-    TimeRemindNoComboBox: TComboBox;
+
     OptionsLabel: TLabel;
-    TimeRemindLabel: TLabel;
-    TimeBreakEdit: TEdit;
-    TimeRemindEdit: TEdit;
-    TimeUpdateSelect: TComboBox;
-    TimeWorkSelect: TComboBox;
-    TimeUpdateEdit: TEdit;
-    TimeBreakLabel: TLabel;
-    TimeUpdateLabel: TLabel;
-    TimeWorkEdit: TEdit;
+
     TimeWorkLabel: TLabel;
-    ButCancel: TButton;
-    ButApply: TButton;
-    ButExit: TButton;
+    TimeWorkEdit: TEdit;
+    TimeWorkSelect: TComboBox;
+
+    TimeBreakLabel: TLabel;
+    TimeBreakEdit: TEdit;
     TimeBreakSelect: TComboBox;
-    TrayIcon: TTrayIcon;
-    TrayImageList: TImageList;
-    MainPopupMenu: TPopupMenu;
-    PopupExit: TMenuItem;
-    Timer: TTimer;
+
+    TimeRemindLabel: TLabel;
+    TimeRemindNoComboBox: TComboBox;
+    TimeRemindLabel1: TLabel;
+    TimeRemindEdit: TEdit;
+    TimeRemindSelect: TComboBox;
+
+    TimeStepLabel: TLabel;
+    TimeStepEdit: TEdit;
+    TimeStepSelect: TComboBox;
+
+    CheckEnMonOff: TCheckBox;
     CheckSound: TCheckBox;
     CheckOff: TCheckBox;
-    PopupSet: TMenuItem;
-    PopupOff: TMenuItem;
-    PopupMakeBr: TMenuItem;
-    CheckEnMonOff: TCheckBox;
-    InfoLabel: TLabel;
-    PopupBreakLine: TMenuItem;
-    PopupTimerReset: TMenuItem;
-    PopupImageList: TImageList;
+
     Image1: TImage;
+
     ButOK: TButton;
+    ButApply: TButton;
+    ButCancel: TButton;
+    ButExit: TButton;
+
+    InfoLabel: TLabel;
+
+    TrayIcon: TTrayIcon;
+    TrayImageList: TImageList;
+
+    MainPopupMenu: TPopupMenu;
+    PopupExit: TMenuItem;
+    PopupOff: TMenuItem;
+    PopupBreakLine: TMenuItem;
+    PopupSet: TMenuItem;
+    PopupMakeBr: TMenuItem;
+    PopupTimerReset: TMenuItem;
+
+    PopupImageList: TImageList;
+    Timer: TTimer;
     HintTimer: TTimer;
+
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
 
     procedure ButOKClick(Sender: TObject);
     procedure ButApplyClick(Sender: TObject);
     procedure ButCancelClick(Sender: TObject);
     procedure ButExitClick(Sender: TObject);
+
+    procedure TimeWorkEditChange(Sender: TObject);
+    procedure TimeBreakEditChange(Sender: TObject);
+    procedure TimeRemindNoComboBoxChange(Sender: TObject);
+    procedure TimeRemindEditChange(Sender: TObject);
+    procedure TimeRemindSelectChange(Sender: TObject);
+    procedure TimeStepEditChange(Sender: TObject);
+
+    procedure TrayIconClick(Sender: TObject);
+
     procedure CheckEnMonOffChange(Sender: TObject);
-    procedure CheckOffChange(Sender: TObject);
     procedure CheckSoundChange(Sender: TObject);
+    procedure CheckOffChange(Sender: TObject);
 
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-
-    procedure setIcon(num: Integer);
+    procedure selectIcon(num: integer);
 
     procedure setSettings(s: TBreakSettings);
     function getSettings(): TBreakSettings;
 
-    procedure setChanged(isChanged: Boolean);
-    procedure TimeBreakEditChange(Sender: TObject);
-    procedure TimeRemindEditChange(Sender: TObject);
-    procedure TimeRemindNoComboBoxChange(Sender: TObject);
-    procedure TimeRemindSelectChange(Sender: TObject);
-    procedure TimeUpdateEditChange(Sender: TObject);
-    procedure TimeWorkEditChange(Sender: TObject);
-    procedure TrayIconClick(Sender: TObject);
+    procedure setChanged(isChanged: boolean);
+
   private
-    Settings: TBreakSettings;
-    SettingsChanged: Boolean;
+    settings: TBreakSettings;
+    settingsChanged: boolean;
+    changing: boolean;
   public
-    ActionsOnSave: TSimpleEventList;
-    ActionsOnShow: TSimpleEventList;
+    actionsOnSave: TSimpleEventList;
+    actionsOnShow: TSimpleEventList;
   end;
+
+type
+  TimeSetting = record
+    Value: string;
+    unitNum: 1..MAX_MEASUREMENT;
+  end;
+
+function loadSetting(Text: TimeSetting; default: cardinal): cardinal;
+function showSetting(time: cardinal): TimeSetting;
 
 implementation
 
 {$R *.lfm}
 
+function loadSetting(Text: TimeSetting; default: cardinal): cardinal;
+begin
+  Result := StrToIntDef(Text.Value, default div measurementCoeff(Text.unitNum)) * measurementCoeff(Text.unitNum);
+end;
+
+function showSetting(time: cardinal): TimeSetting;
+begin
+  Result.unitNum := calcMeasurement(time);
+  Result.Value := IntToStr(time div measurementCoeff(Result.unitNum));
+end;
+
 { TMainWnd }
 
-procedure TMainWnd.setIcon(num: Integer);
+procedure TMainWnd.selectIcon(num: integer);
 begin
   TrayImageList.GetIcon(num, TrayIcon.Icon);
 end;
 
 procedure TMainWnd.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  CloseAction:=caNone;
+  CloseAction := caNone;
   Hide;
 end;
 
 procedure TMainWnd.ButOKClick(Sender: TObject);
 begin
-  ActionsOnSave.executeAll();
+  actionsOnSave.executeAll();
   Self.Close;
 end;
 
 procedure TMainWnd.ButApplyClick(Sender: TObject);
 begin
-  ActionsOnSave.executeAll();
+  actionsOnSave.executeAll();
 end;
 
 procedure TMainWnd.ButCancelClick(Sender: TObject);
@@ -130,86 +167,94 @@ end;
 
 procedure TMainWnd.CheckEnMonOffChange(Sender: TObject);
 begin
-  Settings.EnMonOff:=CheckEnMonOff.Checked;
-  setChanged(true);
+  settings.EnMonOff := CheckEnMonOff.Checked;
+  setChanged(True);
 end;
 
 procedure TMainWnd.CheckOffChange(Sender: TObject);
 begin
-  Settings.Off:=CheckOff.Checked;
-  setChanged(true);
+  settings.Off := CheckOff.Checked;
+  setChanged(True);
 end;
 
 procedure TMainWnd.CheckSoundChange(Sender: TObject);
 begin
-  Settings.Sound:=CheckSound.Checked;
-  setChanged(true);
+  settings.Sound := CheckSound.Checked;
+  setChanged(True);
 end;
 
 procedure TMainWnd.FormCreate(Sender: TObject);
 var
   i: integer;
 begin
+  changing := True;
   TimeRemindNoComboBox.Clear;
-  for i:=1 to MaxRemind do begin
-    TimeRemindNoComboBox.AddItem(IntToStr(i),nil);
+  for i := 1 to MAX_REMIND do begin
+    TimeRemindNoComboBox.AddItem(IntToStr(i), nil);
   end;
   TimeWorkSelect.Clear;
   TimeBreakSelect.Clear;
   TimeRemindSelect.Clear;
-  TimeUpdateSelect.Clear;
-  for i:=1 to Length(TimeCoeffs) do begin
+  TimeStepSelect.Clear;
+  for i := 1 to Length(TimeCoeffs) do begin
     TimeWorkSelect.AddItem(TimeNames[i], nil);
     TimeBreakSelect.AddItem(TimeNames[i], nil);
     TimeRemindSelect.AddItem(TimeNames[i], nil);
-    TimeUpdateSelect.AddItem(TimeNames[i], nil);
+    TimeStepSelect.AddItem(TimeNames[i], nil);
   end;
+  changing := False;
 end;
 
 procedure TMainWnd.setSettings(s: TBreakSettings);
 var
-  unitNum:integer;
+  setRec: TimeSetting;
 begin
-  Settings:=s;
+  settings := s;
+  Assert(changing = False, 'Changing is true when called setSettings');
+  changing := True;
 
-  TimeRemindNoComboBox.ItemIndex:=0;
+  TimeRemindNoComboBox.ItemIndex := 0;
 
-  unitNum:=calcMeasurement(Settings.TimeStep);
-  TimeUpdateSelect.ItemIndex:=unitNum-1;
-  TimeUpdateEdit.Text:=IntToStr(settings.TimeStep div measurementCoeff(unitNum));
+  setRec := showSetting(settings.TimeStep);
+  TimeStepEdit.Text := setRec.Value;
+  TimeStepSelect.ItemIndex := setRec.unitNum - 1;
 
-  unitNum:=calcMeasurement(Settings.TimeBreak);
-  writeln(unitNum);
-  TimeBreakSelect.ItemIndex:=unitNum-1;
-  TimeBreakEdit.Text:=IntToStr(settings.TimeBreak div measurementCoeff(unitNum));
+  setRec := showSetting(settings.TimeBreak);
+  TimeBreakEdit.Text := setRec.Value;
+  TimeBreakSelect.ItemIndex := setRec.unitNum - 1;
 
-  unitNum:=calcMeasurement(Settings.TimeWork);
-  TimeWorkSelect.ItemIndex:=unitNum-1;
-  TimeWorkEdit.Text:=IntToStr(settings.TimeWork div measurementCoeff(unitNum));
+  setRec := showSetting(settings.TimeWork);
+  TimeWorkEdit.Text := setRec.Value;
+  TimeWorkSelect.ItemIndex := setRec.unitNum - 1;
 
   TimeRemindNoComboBox.OnChange(nil);
 
-  CheckEnMonOff.Checked:=Settings.EnMonOff;
-  CheckOff.Checked:=Settings.Off;
-  CheckSound.Checked:=Settings.Sound;
+  CheckEnMonOff.Checked := settings.EnMonOff;
+  CheckOff.Checked := settings.Off;
+  CheckSound.Checked := settings.Sound;
 
-  setChanged(false);
+  changing := False;
+  setChanged(False);
 end;
 
 function TMainWnd.getSettings(): TBreakSettings;
 begin
-  Result:=Settings;
+  Result := settings;
 end;
 
 procedure TMainWnd.TimeRemindNoComboBoxChange(Sender: TObject);
 var
-  unitNum: integer;
+  setRec: TimeSetting;
   i: integer;
+  changingBuf: boolean;
 begin
-  i:=TimeRemindNoComboBox.ItemIndex+1;
-  unitNum:=calcMeasurement(Settings.TimeRemind[i]);
-  TimeRemindSelect.ItemIndex:=unitNum-1;
-  TimeRemindEdit.Text:=IntToStr(Settings.TimeRemind[TimeRemindNoComboBox.ItemIndex+1] div measurementCoeff(unitNum));
+  changingBuf := changing;
+  changing := True;
+  i := TimeRemindNoComboBox.ItemIndex + 1;
+  setRec:=showSetting(settings.TimeRemind[i]);
+  TimeRemindSelect.ItemIndex:=setRec.unitNum-1;
+  TimeRemindEdit.Text:=setRec.Value;
+  changing := changingBuf;
 end;
 
 procedure TMainWnd.TimeRemindSelectChange(Sender: TObject);
@@ -217,39 +262,61 @@ begin
 
 end;
 
-procedure TMainWnd.TimeUpdateEditChange(Sender: TObject);
+procedure TMainWnd.TimeStepEditChange(Sender: TObject);
+var
+  setRec: TimeSetting;
 begin
-  Settings.TimeStep:=StrToInt(TimeUpdateEdit.Text)*measurementCoeff(TimeUpdateSelect.ItemIndex+1);
-  setChanged(true);
+  if changing then Exit;
+  setRec.Value:=TimeStepEdit.Text;
+  setRec.unitNum:=TimeStepSelect.ItemIndex+1;
+  settings.TimeStep:=loadSetting(setRec, settings.TimeStep);
+  setChanged(True);
 end;
 
 procedure TMainWnd.TimeWorkEditChange(Sender: TObject);
+var
+  setRec: TimeSetting;
 begin
-  Settings.TimeWork:=StrToInt(TimeWorkEdit.Text)*measurementCoeff(TimeWorkSelect.ItemIndex+1);
-  setChanged(true);
+  if changing then Exit;
+  setRec.Value:=TimeWorkEdit.Text;
+  setRec.unitNum:=TimeWorkSelect.ItemIndex+1;
+  settings.TimeWork:=loadSetting(setRec, settings.TimeWork);
+  setChanged(True);
 end;
 
 procedure TMainWnd.TrayIconClick(Sender: TObject);
 begin
-  ActionsOnShow.executeAll();
+  actionsOnShow.executeAll();
 end;
 
-procedure TMainWnd.setChanged(isChanged: Boolean);
+procedure TMainWnd.setChanged(isChanged: boolean);
 begin
-  SettingsChanged:=isChanged;
-  ButApply.Enabled:=isChanged;
+  settingsChanged := isChanged;
+  ButApply.Enabled := isChanged;
 end;
 
 procedure TMainWnd.TimeBreakEditChange(Sender: TObject);
+var
+  setRec: TimeSetting;
 begin
-  Settings.TimeBreak:=StrToInt(TimeBreakEdit.Text)*measurementCoeff(TimeBreakSelect.ItemIndex+1);
-  setChanged(true);
+  if changing then Exit;
+  setRec.Value:=TimeBreakEdit.Text;
+  setRec.unitNum:=TimeBreakSelect.ItemIndex+1;
+  settings.TimeBreak:=loadSetting(setRec, settings.TimeBreak);
+  setChanged(True);
 end;
 
 procedure TMainWnd.TimeRemindEditChange(Sender: TObject);
+var
+  setRec: TimeSetting;
+  i: Integer;
 begin
-  Settings.TimeRemind[TimeRemindNoComboBox.ItemIndex+1]:=StrToInt(TimeRemindEdit.Text)*measurementCoeff(TimeRemindSelect.ItemIndex+1);
-  setChanged(true);
+  if changing then Exit;
+  i :=TimeRemindNoComboBox.ItemIndex + 1;
+  setRec.Value:=TimeRemindEdit.Text;
+  setRec.unitNum:=TimeRemindSelect.ItemIndex+1;
+  settings.TimeRemind[i]:=loadSetting(setRec, settings.TimeRemind[i]);
+  setChanged(True);
 end;
 
 end.

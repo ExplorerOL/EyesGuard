@@ -8,15 +8,16 @@ uses
   Classes, SysUtils;
 
 const
-  MaxRemind = 3;
-  DefaultSettingsFileName = 'set.dat';
+  MAX_REMIND = 3;
+  MAX_MEASUREMENT = 3;
+  DEFAULT_SETTINGS_FILENAME = 'set.dat';
 
 type
   TBreakSettings = record
     TimeStep: cardinal;
     TimeWork: cardinal;
     TimeBreak: cardinal;
-    TimeRemind: array [1..MaxRemind] of cardinal;
+    TimeRemind: array [1..MAX_REMIND] of cardinal;
     EnMonOff: boolean;
     Sound: boolean;
     Off: boolean;
@@ -53,43 +54,46 @@ const
     );
 
 function checkSettings(s: TBreakSettings): boolean;
-function calcMeasurement(time: Cardinal): Integer;
-function measurementCoeff(unitNum: Integer): Integer;
+function calcMeasurement(time: cardinal): integer;
+function measurementCoeff(unitNum: integer): integer;
 
 implementation
 
-function calcMeasurement(time: Cardinal): Integer;
+function calcMeasurement(time: cardinal): integer;
 var
-  i:integer;
+  i: integer;
 begin
-  if time<1000 then begin
-    Result:=1;
-  end else if time<60000 then begin
-    Result:=2
-  end else begin
-    Result:=3;
+  if time < 1000 then begin
+    Result := 1;
+  end
+  else if time < 60000 then begin
+    Result := 2;
+  end
+  else begin
+    Result := 3;
   end;
 end;
 
-function measurementCoeff(unitNum: Integer): Integer;
+function measurementCoeff(unitNum: integer): integer;
 begin
   case unitNum of
-    1: Result:=1;
-    2: Result:=MSecsPerSec;
-    3: Result:=SecsPerMin*MSecsPerSec;
-    else halt;
+    1: Result := 1;
+    2: Result := MSecsPerSec;
+    3: Result := SecsPerMin * MSecsPerSec;
+    else
+      halt;
   end;
 end;
 
 function checkSettings(s: TBreakSettings): boolean;
 var
-  i:integer;
+  i: integer;
 begin
-  Result:=s.TimeRemind[1]<s.TimeWork;
-  for i:=2 to MaxRemind do begin
-    if s.TimeRemind[i]>=s.TimeRemind[i-1] then Result:=False;
+  Result := s.TimeRemind[1] < s.TimeWork;
+  for i := 2 to MAX_REMIND do begin
+    if s.TimeRemind[i] >= s.TimeRemind[i - 1] then Result := False;
   end;
-  if s.TimeRemind[MaxRemind]<0 then Result:=False;
+  if s.TimeRemind[MAX_REMIND] < 0 then Result := False;
 end;
 
 end.

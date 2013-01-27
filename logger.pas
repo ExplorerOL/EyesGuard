@@ -62,7 +62,8 @@ begin
     AssignFile(f, LogFileName);
     if FileExists(LogFileName) then begin
       Append(f);
-    end else begin
+    end
+    else begin
       Rewrite(f);
     end;
     WriteLn(f, FormatDateTime('c', t), ' ', Message);
