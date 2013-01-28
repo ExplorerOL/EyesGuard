@@ -6,7 +6,7 @@ object MainWnd: TMainWnd
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'EyesGuard v1.12'
+  Caption = 'EyesGuard v1.14'
   ClientHeight = 301
   ClientWidth = 374
   Color = clBtnFace
@@ -3993,7 +3993,7 @@ object MainWnd: TMainWnd
     Images = PopupImageList
     OwnerDraw = True
     TrackButton = tbLeftButton
-    Left = 112
+    Left = 144
     Top = 8
     object PopupExit: TMenuItem
       Caption = #1042#1099#1093#1086#1076
@@ -4436,5 +4436,10 @@ object MainWnd: TMainWnd
       F000020007E0407FE400000000000C7FFC0080018001337FFC0080018001727F
       FC00C003C003CCFFFC00F00FF00FC1FF00000000000000000000000000000000
       000000000000}
+  end
+  object HintTimer: TTimer
+    OnTimer = HintTimerTimer
+    Left = 112
+    Top = 8
   end
 end

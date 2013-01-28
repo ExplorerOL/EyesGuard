@@ -31,7 +31,7 @@
 #pragma package(smart_init)
 
 #define setfilename "set.dat"
-#define setfiledir  "Data"
+#define setfiledir  "."
 #define setfile     setfiledir "\\" setfilename
 
 void ReadSettings()
@@ -282,7 +282,8 @@ bool UpdateProgramSet()
     else
          {
            MainWnd->TrayIcon->IconIndex = 0;
-           MainWnd->Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+           //MainWnd->Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+           MainWnd->PopupTimerResetClick(MainWnd->ButApply);
            MainWnd->PopupMakeBr->Enabled = true;
            MainWnd->PopupTimerReset->Enabled = true;
            MainWnd->PopupOff->ImageIndex = 2;

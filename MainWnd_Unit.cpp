@@ -40,21 +40,21 @@ TBreakWnd *BreakWnd;
 __fastcall TMainWnd::TMainWnd(TComponent* Owner)
         : TForm(Owner)
 {
-  IsBreakNow = false;
-  IsWarningNow = false;
-  Counter = 0;
+  //IsBreakNow = false;
+  //IsWarningNow = false;
+  //Counter = 0;
 
   EnMonOff = true;
   Sound = true;
   Off = false;
 
   ReadSettings();
-  if (!(Off)) Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
-  Timer->Enabled = true;
+  PopupTimerResetClick(MainWnd);
+  //Timer->Enabled = true;
   TrayIcon->Visible = false;
   TrayIcon->Visible = true;
-  
- 
+
+
 }
 
 //---------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
         if (IsWarningNow)
              { // Установка режима Work из BreakWarning
 
-               Counter = 0;
+               //Counter = 0;
                if (EnMonOff) SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,-1);
                if (BreakWnd != NULL)
                         {
@@ -104,9 +104,10 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                          BreakWnd = NULL;
                         }
              //  BreakWnd->Close();
-               IsWarningNow = false;
-               IsBreakNow = false;
-               Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+               //IsWarningNow = false;
+               //IsBreakNow = false;
+               //Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+               PopupTimerResetClick(Sender);
                MainWnd->PopupTimerReset->Enabled = true;
               // Beep(2000,100);
 
@@ -181,7 +182,7 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                                 if (Sound) Beep(1000,500);
                                 IsWarningNow = true;
                                 IsBreakNow = false; }
-          
+
               }
 
 
@@ -281,7 +282,7 @@ void __fastcall TMainWnd::PopupOffClick(TObject *Sender)
         {
          delete BreakWnd;
          BreakWnd = NULL;
-        } 
+        }
 
 
  CheckOff->Checked = !( CheckOff->Checked);
@@ -324,9 +325,26 @@ Timer->Enabled = false;
 Counter = 0;
 IsWarningNow = false;
 IsBreakNow = false;
-Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
-
+  if (!(Off)) {
+    Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+    BreakTime = Now();
+    BreakTime += MainWnd->TimeWork * TIMEMULT;
+  }
 Timer->Enabled = true;
 }
 //---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TMainWnd::HintTimerTimer(TObject *Sender)
+{
+  if (!Off) {
+    MainWnd->TrayIcon->Hint = "Eyesguard\nДо перерыва " + (BreakTime-Now()).FormatString("h:mm:ss");
+  } else {
+    MainWnd->TrayIcon->Hint = "Eyesguard\nВыключено";
+  }
+}
+//---------------------------------------------------------------------------
+
 

@@ -38,6 +38,7 @@
 #include "BreakWnd_Unit.h"
 #include <Graphics.hpp>
 #define TIMERMULT 60000
+#define TIMEMULT (1.0/60/24)
 #define TIMEFIRSTWRN 1
 //---------------------------------------------------------------------------
 class TMainWnd : public TForm
@@ -68,6 +69,7 @@ __published:	// IDE-managed Components
         TImageList *PopupImageList;
         TImage *Image1;
         TButton *ButOK;
+        TTimer *HintTimer;
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
         void __fastcall ButCancelClick(TObject *Sender);
@@ -89,6 +91,7 @@ __published:	// IDE-managed Components
         void __fastcall PopupMakeBrClick(TObject *Sender);
         void __fastcall PopupTimerResetClick(TObject *Sender);
         void __fastcall ButOKClick(TObject *Sender);
+        void __fastcall HintTimerTimer(TObject *Sender);
 
 private:	// User declarations
 
@@ -99,8 +102,7 @@ unsigned char TimeBreak;
 bool EnMonOff;
 bool Sound;
 bool Off;
-
-
+TDateTime BreakTime;
 
 bool IsBreakNow;
 bool IsWarningNow;
