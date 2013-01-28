@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -23,14 +23,14 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef BreakFormH
-#define BreakFormH
+#ifndef BreakWnd_UnitH
+#define BreakWnd_UnitH
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
-#include "MainForm.h"
+#include "MainWnd_Unit.h"
 //---------------------------------------------------------------------------
 class TBreakWnd : public TForm
 {
@@ -47,6 +47,6 @@ public:		// User declarations
 
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TBreakWnd *BreakWnd;
+//extern PACKAGE TBreakWnd *BreakWnd;
 //---------------------------------------------------------------------------
 #endif

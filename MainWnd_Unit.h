@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -23,8 +23,8 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef MainFormH
-#define MainFormH
+#ifndef MainWnd_UnitH
+#define MainWnd_UnitH
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
@@ -34,7 +34,8 @@
 #include <ImgList.hpp>
 #include <Menus.hpp>
 #include <ExtCtrls.hpp>
-#include "BreakForm.h"
+#include "BreakWnd_Unit.h"
+#include <Graphics.hpp>
 #define TIMERMULT 60000
 #define TIMEFIRSTWRN 1
 //---------------------------------------------------------------------------
@@ -50,7 +51,7 @@ __published:	// IDE-managed Components
         TButton *ButApply;
         TButton *ButExit;
         TTrayIcon *TrayIcon;
-        TImageList *ImageList;
+        TImageList *TrayImageList;
         TPopupMenu *PopupMenu;
         TMenuItem *PopupExit;
         TTimer *Timer;
@@ -62,6 +63,9 @@ __published:	// IDE-managed Components
         TCheckBox *CheckEnMonOff;
         TLabel *InfoLabel;
         TMenuItem *PopupBreakLine;
+        TMenuItem *PopupTimerReset;
+        TImageList *PopupImageList;
+        TImage *Image1;
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
         void __fastcall ButOKClick(TObject *Sender);
@@ -81,8 +85,10 @@ __published:	// IDE-managed Components
         void __fastcall PopupSetClick(TObject *Sender);
         void __fastcall FormShow(TObject *Sender);
         void __fastcall PopupMakeBrClick(TObject *Sender);
+        void __fastcall PopupTimerResetClick(TObject *Sender);
 
 private:	// User declarations
+
 public:		// User declarations
 
 unsigned char TimeWork;

@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -26,8 +26,8 @@
 #include <vcl.h>
 #pragma hdrstop
 //---------------------------------------------------------------------------
-USEFORM("MainForm.cpp", MainWnd);
-USEFORM("BreakForm.cpp", BreakWnd);
+USEFORM("MainWnd_Unit.cpp", MainWnd);
+USEFORM("BreakWnd_Unit.cpp", BreakWnd);
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -61,7 +61,7 @@ if (GetLastError()==ERROR_ALREADY_EXISTS)
                  }
                  catch (Exception &exception)
                  {
-                         Application->ShowException(&exception);
+                        Application->ShowException(&exception);
                  }
         }
         return 0;

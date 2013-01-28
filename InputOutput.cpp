@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -35,24 +35,19 @@ void ReadSettings()
    unsigned char Value;
 
 // Открытие файла
-   if ((fileHandle = open("set.dat",
-             O_RDONLY | O_BINARY , S_IREAD)) == -1)
-    {
-//      MessageBox(MainWnd->Handle, "Ошибка при открытии  на чтение файла set.dat", "Внимание!", MB_OK);
-      return;
-    }
+if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
+{
 
 
 // Чтение интервала времени между перерывами
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
       MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
-      return;
+      MainWnd->TimeWork = 30;
     }
 
-
 // Проверка
-   if ( (Value >= 5) && (Value <= 120))
+   else if ( (Value >= 5) && (Value <= 120))
                      {
                       MainWnd->TimeWork = Value;
                      }
@@ -68,15 +63,15 @@ void ReadSettings()
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
       MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
-      return;
+      MainWnd->TimeBreak = 10;
     }
 
-
 // Проверка
-   if ( (Value >= 1) && (Value <= 30) )
+   else if ( (Value >= 1) && (Value <= 30) )
                      {
                       MainWnd->TimeBreak = Value;
                      }
+
      else
       {
        MessageBox(MainWnd->Handle, "Некорректное время перерыва!", "Внимание!", MB_OK);
@@ -89,9 +84,9 @@ void ReadSettings()
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
       MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
-      return;
+      MainWnd->EnMonOff = false;
     }
-   MainWnd->EnMonOff = Value;
+   else MainWnd->EnMonOff = Value;
 
 
 //Чтение настроек звукового оповещения
@@ -99,21 +94,41 @@ void ReadSettings()
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
       MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
-      return;
+      MainWnd->Sound = true;
     }
-   MainWnd->Sound = Value;
+   else MainWnd->Sound = Value;
 
 //Чтение настройки "Выключить"
    lseek(fileHandle, 8,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
       MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
-      return;
+      MainWnd->Off = false;
     }
-   MainWnd->Off = Value;
+   else MainWnd->Off = Value;
 
-   
    close(fileHandle);
+
+}
+else
+{
+//      MessageBox(MainWnd->Handle, "Ошибка при открытии  на чтение файла set.dat", "Внимание!", MB_OK);
+    // Заполнить значениями по умолчанию
+      MainWnd->TimeWork = 30;
+      MainWnd->TimeBreak = 10;
+      MainWnd->EnMonOff = false;
+      MainWnd->Sound = true;
+      MainWnd->Off = false;
+}
+
+
+
+
+
+
+
+
+
    UpdateWndSet();
 }
 
@@ -198,11 +213,15 @@ void UpdateWndSet()
          {
           MainWnd->TrayIcon->IconIndex = 1;
           MainWnd->PopupMakeBr->Enabled = false;
+          MainWnd->PopupTimerReset->Enabled = false;
+          MainWnd->PopupOff->ImageIndex = 1;
          }
     else
          {
           MainWnd->TrayIcon->IconIndex = 0;
           MainWnd->PopupMakeBr->Enabled = true;
+          MainWnd->PopupTimerReset->Enabled = true;
+          MainWnd->PopupOff->ImageIndex = 2;
          } 
 
 }
@@ -247,14 +266,18 @@ bool UpdateProgramSet()
            MainWnd->TrayIcon->IconIndex = 1;
            MainWnd->Timer->Interval = 0;
            MainWnd->PopupMakeBr->Enabled = false;
+           MainWnd->PopupTimerReset->Enabled = false;
+           MainWnd->PopupOff->ImageIndex = 1;
          }
     else
          {
            MainWnd->TrayIcon->IconIndex = 0;
-           MainWnd->Timer->Interval = MainWnd->TimeWork*TIMERMULT;
+           MainWnd->Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
            MainWnd->PopupMakeBr->Enabled = true;
+           MainWnd->PopupTimerReset->Enabled = true;
+           MainWnd->PopupOff->ImageIndex = 2;
          }
-
+  
 return true;
 }
 

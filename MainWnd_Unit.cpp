@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -26,13 +26,14 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "MainForm.h"
+#include "MainWnd_Unit.h"
 #include "InputOutput.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "trayicon"
 #pragma resource "*.dfm"
 TMainWnd *MainWnd;
+TBreakWnd *BreakWnd;
 
 //---------------------------------------------------------------------------
 __fastcall TMainWnd::TMainWnd(TComponent* Owner)
@@ -47,18 +48,18 @@ __fastcall TMainWnd::TMainWnd(TComponent* Owner)
   Off = false;
 
   ReadSettings();
-  if (!(Off)) Timer->Interval = TimeWork*TIMERMULT;
-
+  if (!(Off)) Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+  Timer->Enabled = true;
+  TrayIcon->Visible = false;
+  TrayIcon->Visible = true;
+  
  
 }
 
 //---------------------------------------------------------------------------
-
-
-//---------------------------------------------------------------------------
 void __fastcall TMainWnd::ButExitClick(TObject *Sender)
 {
- Close();
+ Application->Terminate();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainWnd::ButApplyClick(TObject *Sender)
@@ -82,45 +83,54 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
   if (IsBreakNow)
 
         if (IsWarningNow)
-             { // Установка режима Work
+             { // Установка режима Work из BreakWarning
 
                Counter = 0;
                if (EnMonOff) SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,-1);
-               delete BreakWnd;
-               BreakWnd = NULL;
-               IsBreakNow = !(IsBreakNow);
+               if (BreakWnd != NULL)
+                        {
+                         delete BreakWnd;
+                         BreakWnd = NULL;
+                        }
+             //  BreakWnd->Close();
+               IsWarningNow = false;
+               IsBreakNow = false;
                Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
-
+               MainWnd->PopupTimerReset->Enabled = true;
+              // Beep(2000,100);
 
              }
           else
-             { // Установка режима BreakWarning
+             { // Установка режима BreakWarning из Break
 
                Timer->Interval = 1000;
-               if (!Sound) Counter = 50;
-               while (Counter < 5)
-                {
-                 Counter++;
-                 Beep(1000,100);
-                 return;
-                }
-               Counter = 0;
-               Beep(1000,500);
-           
 
+               if (Sound)
+                { Beep(1000,500);
+                  Sleep(1000);
+                  Beep(1000,500);
+                }
+
+               Counter = 0;
+
+               IsWarningNow = true;
+               IsBreakNow = true;
              }
+
+
    else if (IsWarningNow)
-             { // Установка режима Break
+             { // Установка режима Break из WorkWarning
 
                if (Counter == 0)
                         {
                          if (BreakWnd == NULL)
                            {
-                            Application->CreateForm(__classid(TBreakWnd), &BreakWnd);
+                            BreakWnd = new TBreakWnd( Application );
                             BreakWnd->Cursor = crNone;
                             BreakWnd->SetFocus();
                            }
                          Timer->Interval = 5000;
+                         MainWnd->PopupTimerReset->Enabled = false;
                          Counter++;
                          return;
                         }
@@ -128,58 +138,51 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                  {
                   SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,1);
                  }
-               IsBreakNow = !(IsBreakNow);
 
+               IsWarningNow = false;
+               IsBreakNow = true;
                Timer->Interval = MainWnd->TimeBreak*TIMERMULT;
+
                Counter = 0;
+
              }
           else
-             { // Установка режима WorkWarning
+             { // Установка режима WorkWarning из Work
 
-              if (Counter == 0)
-                         {
-                           Counter++;
-                           Timer->Interval = 3000;
-                           MessageBox(NULL, "Через 1 МИНУТУ будет перерыв!",
-                           "EyesGuard !Внимание! ",MB_SYSTEMMODAL+MB_ICONWARNING);
-                           return;
-                          }
-              if (Counter == 1)
-                         {
-                           Counter++;
-                           CloseWarningMsg();
-                           Timer->Interval = TIMERMULT;
-                           return;
-                          }
+                Counter++;
 
-              Timer->Interval = 1000;
 
-              while (Counter < 11)
-                {
-                 Counter++;
-                 if (Sound) Beep(1000,100);
-                 if (Counter == 6)
-                      {
-                       CloseWarningMsg();
-                      }
-                 if (Counter == 3)
-                        {
-                           MessageBox(NULL, "Через 10 СЕКУНД будет перерыв!",
+           if (Counter == 1) {  Timer->Interval = 3000;
+                            MessageBox(NULL, "Через 1 МИНУТУ будет перерыв!",
+                            "EyesGuard !Внимание! ",MB_SYSTEMMODAL+MB_ICONWARNING);
+
+                             }
+
+           if (Counter == 2)  { CloseWarningMsg();
+                            Timer->Interval = TIMERMULT; }
+           if (Counter == 3) Timer->Interval = 1000;
+           if (Counter == 4) MessageBox(NULL, "Через 10 СЕКУНД будет перерыв!",
                            "EyesGuard !Внимание! ", MB_SYSTEMMODAL+MB_ICONWARNING);
-                        }
-                 return;
-                }
+           if (Counter == 7) CloseWarningMsg();
+           if ((Counter == 10) && (Sound)) Beep(1000,100);
+           if ((Counter == 11) && (Sound)) Beep(1000,100);
+           if (Counter == 12) { Counter = 0;
+                                if (Sound) Beep(1000,500);
+                                IsWarningNow = true;
+                                IsBreakNow = false; }
+          
+              }
 
-               Counter = 0;
-               Beep(1000,500);
-            }
-IsWarningNow = !(IsWarningNow);
+
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainWnd::FormClose(TObject *Sender, TCloseAction &Action)
 {
- if (TrayIcon->Visible) TrayIcon->Visible = false;
+ Action = caNone;
+ UpdateWndSet();
+ ButApply->Enabled = false;
+ Hide();
 }
 //---------------------------------------------------------------------------
 
@@ -256,7 +259,7 @@ void __fastcall TMainWnd::CheckOffEnter(TObject *Sender)
 //Begin Popup Menu---
 void __fastcall TMainWnd::PopupExitClick(TObject *Sender)
 {
- Close();
+ Application->Terminate();
 }
 
 //---------------------------------------------------------------------------
@@ -295,10 +298,7 @@ void __fastcall TMainWnd::PopupMakeBrClick(TObject *Sender)
 //End Popup Menu---
 
 
-
 //---------------------------------------------------------------------------
-
-
 void __fastcall TMainWnd::FormShow(TObject *Sender)
 {
  Left = Screen->Width - Width - 100;
@@ -306,16 +306,18 @@ void __fastcall TMainWnd::FormShow(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
+void __fastcall TMainWnd::PopupTimerResetClick(TObject *Sender)
+{
+Timer->Enabled = false;
 
+Counter = 0;
+IsWarningNow = false;
+IsBreakNow = false;
+Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
 
-
-
-
-
-
-
-
-
+Timer->Enabled = true;
+}
+//---------------------------------------------------------------------------
 
 
 

@@ -4,7 +4,7 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -26,11 +26,11 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "BreakForm.h"
+#include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-TBreakWnd *BreakWnd;
+//TBreakWnd *BreakWnd;
 
 //---------------------------------------------------------------------------
 __fastcall TBreakWnd::TBreakWnd(TComponent* Owner)
@@ -44,7 +44,7 @@ void __fastcall TBreakWnd::FormClose(TObject *Sender, TCloseAction &Action)
 {
  MainWnd->IsBreakNow = true;
  MainWnd->IsWarningNow = true;
- MainWnd->TimerTimer(BreakWnd);
+ MainWnd->TimerTimer(this);
 }
 //---------------------------------------------------------------------------
 
