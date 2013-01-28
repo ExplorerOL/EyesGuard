@@ -1,6 +1,6 @@
 object MainWnd: TMainWnd
-  Left = 506
-  Top = 177
+  Left = 469
+  Top = 259
   HorzScrollBar.Visible = False
   ActiveControl = ButOK
   AlphaBlendValue = 215
@@ -8,12 +8,12 @@ object MainWnd: TMainWnd
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'EyesGuard v1.1'
-  ClientHeight = 211
-  ClientWidth = 242
+  ClientHeight = 325
+  ClientWidth = 372
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -16
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
@@ -31,59 +31,59 @@ object MainWnd: TMainWnd
   OldCreateOrder = False
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 139
+  TextHeight = 20
   object OptionsLabel: TLabel
     Left = 0
     Top = 0
-    Width = 242
-    Height = 20
+    Width = 372
+    Height = 26
     Align = alTop
     Alignment = taCenter
-    Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+    Caption = 'Settings'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -23
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
     Layout = tlCenter
   end
   object TimeWorkLabel: TLabel
-    Left = 21
-    Top = 33
-    Width = 165
-    Height = 13
-    Caption = #1042#1088#1077#1084#1103' '#1084#1077#1078#1076#1091' '#1087#1077#1088#1077#1088#1099#1074#1072#1084#1080' ('#1084#1080#1085')'
+    Left = 64
+    Top = 51
+    Width = 141
+    Height = 20
+    Caption = 'Work time (minutes)'
   end
   object TimeBreakLabel: TLabel
-    Left = 21
-    Top = 61
-    Width = 155
-    Height = 13
-    Caption = #1044#1083#1080#1090#1077#1083#1100#1085#1086#1089#1090#1100' '#1087#1077#1088#1077#1088#1099#1074#1072' ('#1084#1080#1085')'
+    Left = 64
+    Top = 94
+    Width = 146
+    Height = 20
+    Caption = 'Break time (minutes)'
   end
   object InfoLabel: TLabel
     Left = 0
-    Top = 185
-    Width = 242
-    Height = 26
+    Top = 312
+    Width = 372
+    Height = 13
     Align = alBottom
     Alignment = taCenter
-    Caption = ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081'. www.eyesguard.org   '#169'2007. GNU GPL.'
+    Caption = 'Author: Vorobyov Dmitry. www.eyesguard.org   '#169'2008. GNU GPL.'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
-    Font.Height = -8
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
     WordWrap = True
   end
   object TimeWorkEdit: TEdit
-    Left = 203
-    Top = 31
-    Width = 26
-    Height = 21
+    Left = 264
+    Top = 48
+    Width = 40
+    Height = 28
     AutoSelect = False
     BevelOuter = bvNone
     Ctl3D = True
@@ -96,10 +96,10 @@ object MainWnd: TMainWnd
     OnKeyPress = TimeWorkEditKeyPress
   end
   object TimeBreakEdit: TEdit
-    Left = 203
-    Top = 59
-    Width = 26
-    Height = 21
+    Left = 264
+    Top = 91
+    Width = 40
+    Height = 28
     AutoSelect = False
     MaxLength = 3
     TabOrder = 1
@@ -109,59 +109,59 @@ object MainWnd: TMainWnd
     OnKeyPress = TimeBreakEditKeyPress
   end
   object ButOK: TButton
-    Left = 16
-    Top = 161
-    Width = 43
-    Height = 23
+    Left = 25
+    Top = 248
+    Width = 66
+    Height = 35
     Caption = 'OK'
     TabOrder = 2
     OnClick = ButOKClick
   end
   object ButApply: TButton
-    Left = 85
-    Top = 161
-    Width = 78
-    Height = 23
-    Caption = #1055#1088#1080#1084#1077#1085#1080#1090#1100
+    Left = 131
+    Top = 248
+    Width = 120
+    Height = 35
+    Caption = 'Apply'
     Enabled = False
     TabOrder = 3
     OnClick = ButApplyClick
   end
   object ButExit: TButton
-    Left = 183
-    Top = 161
-    Width = 43
-    Height = 23
-    Caption = #1042#1099#1093#1086#1076
+    Left = 282
+    Top = 248
+    Width = 66
+    Height = 35
+    Caption = 'Exit'
     TabOrder = 4
     OnClick = ButExitClick
   end
   object CheckSound: TCheckBox
-    Left = 10
-    Top = 108
-    Width = 184
-    Height = 15
-    Caption = #1047#1074#1091#1082#1086#1074#1086#1077' '#1086#1087#1086#1074#1077#1097#1077#1085#1080#1077
+    Left = 15
+    Top = 166
+    Width = 283
+    Height = 23
+    Caption = 'Enable sound effects'
     Checked = True
     State = cbChecked
     TabOrder = 5
     OnEnter = CheckSoundEnter
   end
   object CheckOff: TCheckBox
-    Left = 10
-    Top = 130
-    Width = 184
-    Height = 15
-    Caption = #1042#1099#1082#1083#1102#1095#1080#1090#1100
+    Left = 15
+    Top = 200
+    Width = 283
+    Height = 23
+    Caption = 'Switch off'
     TabOrder = 6
     OnEnter = CheckOffEnter
   end
   object CheckEnMonOff: TCheckBox
-    Left = 10
-    Top = 86
-    Width = 231
-    Height = 15
-    Caption = #1042#1099#1082#1083#1102#1095#1072#1090#1100'  '#1084#1086#1085#1080#1090#1086#1088' '#1085#1072' '#1074#1088#1077#1084#1103' '#1087#1077#1088#1077#1088#1099#1074#1072
+    Left = 15
+    Top = 132
+    Width = 356
+    Height = 23
+    Caption = 'Turn the monitor off during a break'
     TabOrder = 7
     OnEnter = CheckOffEnter
   end
@@ -328,22 +328,22 @@ object MainWnd: TMainWnd
     Left = 112
     Top = 8
     object PopupExit: TMenuItem
-      Caption = #1042#1099#1093#1086#1076
+      Caption = 'Exit'
       OnClick = PopupExitClick
     end
     object PopupOff: TMenuItem
-      Caption = #1042#1099#1082#1083#1102#1095#1080#1090#1100
+      Caption = 'Switch off'
       OnClick = PopupOffClick
     end
     object PopupBreakLine: TMenuItem
       Caption = '-'
     end
     object PopupSet: TMenuItem
-      Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+      Caption = 'Settings'
       OnClick = PopupSetClick
     end
     object PopupMakeBr: TMenuItem
-      Caption = #1057#1076#1077#1083#1072#1090#1100' '#1087#1077#1088#1077#1088#1099#1074
+      Caption = 'Make a break now!'
       OnClick = PopupMakeBrClick
     end
   end

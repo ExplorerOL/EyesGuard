@@ -1,25 +1,21 @@
 
-/*********************************************************************
-*                                                                    *
-* EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
-*             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
-*    Данная программа является свободным программным обеспечением.   *
-* Вы вправе распространять ее и/или модифицировать в соответствии    *
-* с условиями Генеральной Общественной Лицензии GNU в том виде,      *
-* как она была опубликована Фондом Свободного ПО                     *
-* (Free Software Foundation); либо версии                            *
-* 2 Лицензии либо (по вашему желанию) любой более поздней версии.    *
-*                                                                    *
-* Программа распространяется в надежде, что она будет полезной,      *
-* но БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙНЫХ ОБЯЗАТЕЛЬСТВ; даже без      *
-* косвенных гарантийных обязательств, связанных с ПОТРЕБИТЕЛЬСКИМИ   *
-* СВОЙСТВАМИ и ПРИГОДНОСТЬЮ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Для получения    *
-* более подробной информации ознакомьтесь с Генеральной              *
-* Общественной Лицензией GNU (http://www.gnu.org/licenses/gpl.html). *
-*                                                                    *
-*********************************************************************/
+/***************************************************************************
+ *   Copyright (C) 2008 by Vorobyov Dmitry                                 *
+ *   eyesguard@yandex.ru                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   The official publication of the license GNU GPL you can find here:    *
+ *   http://www.gnu.org/licenses/gpl.html                                  *
+ ***************************************************************************/
 
 //---------------------------------------------------------------------------
 
@@ -140,8 +136,8 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                          {
                            Counter++;
                            Timer->Interval = 3000;
-                           MessageBox(NULL, "Через 1 МИНУТУ будет перерыв!",
-                           "EyesGuard !Внимание! ",MB_SYSTEMMODAL+MB_ICONWARNING);
+                           MessageBox(NULL, "In 1 minute there will be a break!",
+                           "EyesGuard !Warning! ",MB_SYSTEMMODAL+MB_ICONWARNING);
                            return;
                           }
               if (Counter == 1)
@@ -164,8 +160,8 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                       }
                  if (Counter == 3)
                         {
-                           MessageBox(NULL, "Через 10 СЕКУНД будет перерыв!",
-                           "EyesGuard !Внимание! ", MB_SYSTEMMODAL+MB_ICONWARNING);
+                           MessageBox(NULL, "In 10 seconds there will be a break!",
+                           "EyesGuard !Warning! ", MB_SYSTEMMODAL+MB_ICONWARNING);
                         }
                  return;
                 }

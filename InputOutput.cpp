@@ -1,25 +1,21 @@
 
-/*********************************************************************
-*                                                                    *
-* EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
-*             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2007.                 *
-*    Данная программа является свободным программным обеспечением.   *
-* Вы вправе распространять ее и/или модифицировать в соответствии    *
-* с условиями Генеральной Общественной Лицензии GNU в том виде,      *
-* как она была опубликована Фондом Свободного ПО                     *
-* (Free Software Foundation); либо версии                            *
-* 2 Лицензии либо (по вашему желанию) любой более поздней версии.    *
-*                                                                    *
-* Программа распространяется в надежде, что она будет полезной,      *
-* но БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙНЫХ ОБЯЗАТЕЛЬСТВ; даже без      *
-* косвенных гарантийных обязательств, связанных с ПОТРЕБИТЕЛЬСКИМИ   *
-* СВОЙСТВАМИ и ПРИГОДНОСТЬЮ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Для получения    *
-* более подробной информации ознакомьтесь с Генеральной              *
-* Общественной Лицензией GNU (http://www.gnu.org/licenses/gpl.html). *
-*                                                                    *
-*********************************************************************/
+/***************************************************************************
+ *   Copyright (C) 2008 by Vorobyov Dmitry                                 *
+ *   eyesguard@yandex.ru                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   The official publication of the license GNU GPL you can find here:    *
+ *   http://www.gnu.org/licenses/gpl.html                                  *
+ ***************************************************************************/
 
 //---------------------------------------------------------------------------
 #pragma hdrstop
@@ -46,7 +42,7 @@ void ReadSettings()
 // Чтение интервала времени между перерывами
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Reading error (file set.dat)!", "Warning!", MB_OK);
       return;
     }
 
@@ -58,7 +54,7 @@ void ReadSettings()
                      }
      else
       {
-       MessageBox(MainWnd->Handle, "Некорректное время между перерывами!", "Внимание!", MB_OK);
+       MessageBox(MainWnd->Handle, "Work time is incorrect!", "Warning!", MB_OK);
        MainWnd->TimeWork = 30;
       }
 
@@ -67,7 +63,7 @@ void ReadSettings()
    lseek(fileHandle, 2,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Reading error (file set.dat)!", "Warning!", MB_OK);
       return;
     }
 
@@ -79,7 +75,7 @@ void ReadSettings()
                      }
      else
       {
-       MessageBox(MainWnd->Handle, "Некорректное время перерыва!", "Внимание!", MB_OK);
+       MessageBox(MainWnd->Handle, "Break time is incorrect!", "Warning!", MB_OK);
        MainWnd->TimeBreak = 10;
       }
 
@@ -88,7 +84,7 @@ void ReadSettings()
    lseek(fileHandle, 4,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Reading error (file set.dat)!", "Warning!", MB_OK);
       return;
     }
    MainWnd->EnMonOff = Value;
@@ -98,7 +94,7 @@ void ReadSettings()
    lseek(fileHandle, 6,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Reading error (file set.dat)!", "Warning!", MB_OK);
       return;
     }
    MainWnd->Sound = Value;
@@ -107,7 +103,7 @@ void ReadSettings()
    lseek(fileHandle, 8,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Reading error (file set.dat)!", "Warning!", MB_OK);
       return;
     }
    MainWnd->Off = Value;
@@ -128,7 +124,7 @@ void WriteSettings()
     {
 
 
-      MessageBox(MainWnd->Handle, "Ошибка при открытии на запись файла set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)!", "Warning!", MB_OK);
 
 
       return;
@@ -140,7 +136,7 @@ void WriteSettings()
 // Запись интервала времени между перерывами
    if ( write(fileHandle, &(MainWnd->TimeWork), 1 ) != 1)
     {
-      MessageBox(MainWnd->Handle, "Ошибка при записи в файл set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)", "Warning!", MB_OK);
       return;
     }
 
@@ -148,7 +144,7 @@ void WriteSettings()
    lseek(fileHandle, 2,SEEK_SET);
    if ( write(fileHandle, &(MainWnd->TimeBreak), 1 ) != 1)
     {
-      MessageBox(MainWnd->Handle, "Ошибка при записи в файл set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)", "Warning!", MB_OK);
       return;
     }
 
@@ -156,7 +152,7 @@ void WriteSettings()
    lseek(fileHandle, 4,SEEK_SET);
    if ( write(fileHandle, &(MainWnd->EnMonOff), 1 ) != 1)
     {
-      MessageBox(MainWnd->Handle, "Ошибка при записи в файл set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)", "Warning!", MB_OK);
       return;
     }
 
@@ -164,7 +160,7 @@ void WriteSettings()
    lseek(fileHandle, 6,SEEK_SET);
    if ( write(fileHandle, &(MainWnd->Sound), 1 ) != 1)
     {
-      MessageBox(MainWnd->Handle, "Ошибка при записи в файл set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)", "Warning!", MB_OK);
       return;
     }
 
@@ -172,7 +168,7 @@ void WriteSettings()
    lseek(fileHandle, 8,SEEK_SET);
    if ( write(fileHandle, &(MainWnd->Off), 1 ) != 1)
     {
-      MessageBox(MainWnd->Handle, "Ошибка при записи в файл set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Writing error (file set.dat)", "Warning!", MB_OK);
       return;
     }
 
@@ -190,8 +186,8 @@ void UpdateWndSet()
   MainWnd->CheckSound->Checked = MainWnd->Sound;
   MainWnd->CheckOff->Checked = MainWnd->Off;
 
-  if (MainWnd->Off) MainWnd->PopupOff->Caption = "Включить";
-               else MainWnd->PopupOff->Caption = "Выключить";
+  if (MainWnd->Off) MainWnd->PopupOff->Caption = "Switch on";
+               else MainWnd->PopupOff->Caption = "Switch off";
 
   MainWnd->CheckEnMonOff->Checked = MainWnd->EnMonOff;
   if (MainWnd->Off)
@@ -221,7 +217,7 @@ bool UpdateProgramSet()
   if ( (StrToInt(MainWnd->TimeWorkEdit->Text) < 5) ||
        (StrToInt(MainWnd->TimeWorkEdit->Text) > 120) )
      {
-       MessageBox(MainWnd->Handle, "Время между перерывами должно быть от 5 до 120 минут!", "Внимание!", MB_OK);
+       MessageBox(MainWnd->Handle, "Work time should be in the interval from 5 to 120 minutes", "Warning!", MB_OK);
        return false;
      }
   MainWnd->TimeWork = StrToInt(MainWnd->TimeWorkEdit->Text);
@@ -230,7 +226,7 @@ bool UpdateProgramSet()
   if ( (StrToInt(MainWnd->TimeBreakEdit->Text) < 1) ||
        (StrToInt(MainWnd->TimeBreakEdit->Text) > 30) )
      {
-       MessageBox(MainWnd->Handle, "Время перерыва должно быть от 1 до 30 минут!", "Внимание!", MB_OK);
+       MessageBox(MainWnd->Handle, "Break time should be in the interval from 1 to 30 minutes!", "Warning!", MB_OK);
        return false;
      }
   MainWnd->TimeBreak = StrToInt(MainWnd->TimeBreakEdit->Text);
@@ -238,8 +234,8 @@ bool UpdateProgramSet()
 
   MainWnd->Sound = MainWnd->CheckSound->Checked;
   MainWnd->Off = MainWnd->CheckOff->Checked;
-  if (MainWnd->Off) MainWnd->PopupOff->Caption = "Включить";
-               else MainWnd->PopupOff->Caption = "Выключить";
+  if (MainWnd->Off) MainWnd->PopupOff->Caption = "Switch on";
+               else MainWnd->PopupOff->Caption = "Switch off";
 
   MainWnd->EnMonOff = MainWnd->CheckEnMonOff->Checked;
   if (MainWnd->Off)
@@ -260,7 +256,7 @@ return true;
 
 void CloseWarningMsg()
 {
-  HWND MesWndHandle = FindWindow(NULL, "EyesGuard !Внимание! ");
+  HWND MesWndHandle = FindWindow(NULL, "EyesGuard !Warning! ");
   if (MesWndHandle != NULL)  SendMessage(MesWndHandle, WM_CLOSE, 0,0);
 
 }

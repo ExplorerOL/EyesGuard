@@ -1,14 +1,14 @@
 object BreakWnd: TBreakWnd
-  Left = 475
-  Top = 194
+  Left = 299
+  Top = 116
   BorderStyle = bsNone
   Caption = 'BreakWnd'
-  ClientHeight = 291
-  ClientWidth = 473
+  ClientHeight = 448
+  ClientWidth = 728
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -16
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
@@ -18,20 +18,20 @@ object BreakWnd: TBreakWnd
   OnClose = FormClose
   OnMouseMove = FormMouseMove
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 139
+  TextHeight = 20
   object BreakLabel1: TLabel
     Left = 0
     Top = 0
-    Width = 473
-    Height = 136
+    Width = 728
+    Height = 209
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = #1055#1045#1056#1045#1056#1067#1042'!!!'
+    Caption = 'BREAK!!!'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clLime
-    Font.Height = -25
+    Font.Height = -39
     Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
@@ -40,17 +40,17 @@ object BreakWnd: TBreakWnd
   end
   object BreakLabel2: TLabel
     Left = 0
-    Top = 136
-    Width = 473
-    Height = 145
+    Top = 209
+    Width = 728
+    Height = 223
     Align = alTop
     Alignment = taCenter
     AutoSize = False
-    Caption = #1044#1072#1081' '#1089#1074#1086#1080#1084' '#1075#1083#1072#1079#1072#1084' '#1086#1090#1076#1086#1093#1085#1091#1090#1100'!'
+    Caption = 'Let your eyes to have rest!'
     Color = clBtnFace
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clYellow
-    Font.Height = -19
+    Font.Height = -29
     Font.Name = 'Arial'
     Font.Style = []
     ParentColor = False
