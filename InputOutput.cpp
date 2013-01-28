@@ -4,7 +4,8 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -29,20 +30,24 @@
 
 #pragma package(smart_init)
 
+#define setfilename "set.dat"
+#define setfiledir  "Data"
+#define setfile     setfiledir "\\" setfilename
+
 void ReadSettings()
 {
    int fileHandle;
    unsigned char Value;
 
 // Открытие файла
-if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
+if ((fileHandle = open(setfile, O_RDONLY | O_BINARY , S_IREAD)) != -1)
 {
 
 
 // Чтение интервала времени между перерывами
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при чтении файла " setfile "!", "Внимание!", MB_OK);
       MainWnd->TimeWork = 30;
     }
 
@@ -62,7 +67,7 @@ if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
    lseek(fileHandle, 2,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при чтении файла " setfile "!", "Внимание!", MB_OK);
       MainWnd->TimeBreak = 10;
     }
 
@@ -83,7 +88,7 @@ if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
    lseek(fileHandle, 4,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при чтении файла " setfile "!", "Внимание!", MB_OK);
       MainWnd->EnMonOff = false;
     }
    else MainWnd->EnMonOff = Value;
@@ -93,7 +98,7 @@ if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
    lseek(fileHandle, 6,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при чтении файла " setfile "!", "Внимание!", MB_OK);
       MainWnd->Sound = true;
     }
    else MainWnd->Sound = Value;
@@ -102,7 +107,7 @@ if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
    lseek(fileHandle, 8,SEEK_SET);
    if ( (read(fileHandle, &Value, 1)) == -1 )
     {
-      MessageBox(MainWnd->Handle, "Ошибка при чтении файла set.dat!", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при чтении файла " setfile "!", "Внимание!", MB_OK);
       MainWnd->Off = false;
     }
    else MainWnd->Off = Value;
@@ -112,7 +117,7 @@ if ((fileHandle = open("set.dat", O_RDONLY | O_BINARY , S_IREAD)) != -1)
 }
 else
 {
-//      MessageBox(MainWnd->Handle, "Ошибка при открытии  на чтение файла set.dat", "Внимание!", MB_OK);
+//      MessageBox(MainWnd->Handle, "Ошибка при открытии  на чтение файла " setfile "!", "Внимание!", MB_OK);
     // Заполнить значениями по умолчанию
       MainWnd->TimeWork = 30;
       MainWnd->TimeBreak = 10;
@@ -138,12 +143,17 @@ void WriteSettings()
    int fileHandle;
 
 // Открытие файла
-   if ((fileHandle = open("set.dat",
+
+   if (!DirectoryExists(setfiledir)) {
+       CreateDir(setfiledir);
+   }
+
+   if ((fileHandle = open(setfile,
              O_WRONLY | O_CREAT  | O_BINARY, S_IWRITE)) == -1) //| O_TRUNC
     {
 
 
-      MessageBox(MainWnd->Handle, "Ошибка при открытии на запись файла set.dat", "Внимание!", MB_OK);
+      MessageBox(MainWnd->Handle, "Ошибка при открытии на запись файла " setfile "!", "Внимание!", MB_OK);
 
 
       return;

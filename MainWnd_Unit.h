@@ -4,7 +4,8 @@
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
 * Сайт программы www.eyesguard.org                                   *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011.                 *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -47,7 +48,7 @@ __published:	// IDE-managed Components
         TEdit *TimeBreakEdit;
         TLabel *TimeWorkLabel;
         TLabel *TimeBreakLabel;
-        TButton *ButOK;
+        TButton *ButCancel;
         TButton *ButApply;
         TButton *ButExit;
         TTrayIcon *TrayIcon;
@@ -66,9 +67,10 @@ __published:	// IDE-managed Components
         TMenuItem *PopupTimerReset;
         TImageList *PopupImageList;
         TImage *Image1;
+        TButton *ButOK;
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
-        void __fastcall ButOKClick(TObject *Sender);
+        void __fastcall ButCancelClick(TObject *Sender);
         void __fastcall TimerTimer(TObject *Sender);
         void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
      //   void __fastcall FormCreate(TObject *Sender);
@@ -86,6 +88,7 @@ __published:	// IDE-managed Components
         void __fastcall FormShow(TObject *Sender);
         void __fastcall PopupMakeBrClick(TObject *Sender);
         void __fastcall PopupTimerResetClick(TObject *Sender);
+        void __fastcall ButOKClick(TObject *Sender);
 
 private:	// User declarations
 

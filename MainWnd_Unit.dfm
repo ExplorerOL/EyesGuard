@@ -2,13 +2,13 @@ object MainWnd: TMainWnd
   Left = 539
   Top = 206
   HorzScrollBar.Visible = False
-  ActiveControl = ButOK
+  ActiveControl = ButCancel
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'EyesGuard v1.11'
+  Caption = 'EyesGuard v1.12'
   ClientHeight = 301
-  ClientWidth = 376
+  ClientWidth = 374
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -155,12 +155,12 @@ object MainWnd: TMainWnd
   Scaled = False
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 140
+  PixelsPerInch = 96
   TextHeight = 20
   object OptionsLabel: TLabel
     Left = 0
     Top = 0
-    Width = 376
+    Width = 374
     Height = 29
     Align = alTop
     Alignment = taCenter
@@ -190,11 +190,13 @@ object MainWnd: TMainWnd
   object InfoLabel: TLabel
     Left = 0
     Top = 288
-    Width = 376
+    Width = 374
     Height = 13
     Align = alBottom
     Alignment = taCenter
-    Caption = ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081'. www.eyesguard.org   '#169'2011. GNU GPL.'
+    Caption = 
+      ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'. www.eyesguard.org   '#169'2012. GNU GP' +
+      'L.'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -1781,19 +1783,19 @@ object MainWnd: TMainWnd
     OnEnter = TimeBreakEditClick
     OnKeyPress = TimeBreakEditKeyPress
   end
-  object ButOK: TButton
-    Left = 25
+  object ButCancel: TButton
+    Left = 185
     Top = 232
-    Width = 66
+    Width = 80
     Height = 35
-    Caption = 'OK'
+    Caption = #1054#1090#1084#1077#1085#1072
     TabOrder = 2
-    OnClick = ButOKClick
+    OnClick = ButCancelClick
   end
   object ButApply: TButton
-    Left = 131
+    Left = 67
     Top = 232
-    Width = 120
+    Width = 110
     Height = 35
     Caption = #1055#1088#1080#1084#1077#1085#1080#1090#1100
     Enabled = False
@@ -1801,7 +1803,7 @@ object MainWnd: TMainWnd
     OnClick = ButApplyClick
   end
   object ButExit: TButton
-    Left = 282
+    Left = 290
     Top = 232
     Width = 66
     Height = 35
@@ -1837,6 +1839,15 @@ object MainWnd: TMainWnd
     Caption = #1042#1099#1082#1083#1102#1095#1072#1090#1100'  '#1084#1086#1085#1080#1090#1086#1088' '#1085#1072' '#1074#1088#1077#1084#1103' '#1087#1077#1088#1077#1088#1099#1074#1072
     TabOrder = 7
     OnEnter = CheckOffEnter
+  end
+  object ButOK: TButton
+    Left = 9
+    Top = 232
+    Width = 48
+    Height = 35
+    Caption = 'OK'
+    TabOrder = 8
+    OnClick = ButOKClick
   end
   object TrayIcon: TTrayIcon
     Visible = True
