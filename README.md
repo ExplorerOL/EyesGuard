@@ -8,4 +8,4 @@ Branch [lazarus](http://github.com/mburyakov/eyesguard/tree/lazarus) is for rewr
 the program in [Lazarus](http://www.lazarus.freepascal.org) IDE using LCL library,
 so the program will be able to run natively in other OS such as GNU/Linux.
 
-You can get more information about the program on its [website](http://eyesguard.org).
+You can get more information about the program on its [website](http://eyesguard.fatal.ru).
