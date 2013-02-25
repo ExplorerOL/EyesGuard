@@ -195,7 +195,7 @@ object MainWnd: TMainWnd
     Align = alBottom
     Alignment = taCenter
     Caption = 
-      ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'. www.eyesguard.org   '#169'2012. GNU GP' +
+      ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'. www.eyesguard.fatal.ru   '#169'2012. GNU GP' +
       'L.'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
