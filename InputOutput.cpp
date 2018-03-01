@@ -3,9 +3,10 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы                                                     *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -33,6 +34,9 @@
 #define setfilename "set.dat"
 #define setfiledir  "."
 #define setfile     setfiledir "\\" setfilename
+
+
+//Чтение настроек из файла
 
 void ReadSettings()
 {
@@ -206,7 +210,7 @@ void WriteSettings()
 }
 
 
-
+//Обновление значений в полях формы главного окна в соответствии со значениями переменных
 void UpdateWndSet()
 {
 
@@ -237,7 +241,7 @@ void UpdateWndSet()
 }
 
 
-
+//Запись параметров из окна формы в переменные программы
 bool UpdateProgramSet()
 {
   MainWnd->Counter = 0;

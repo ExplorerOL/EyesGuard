@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы www.eyesguard.org                                   *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
 *    Данная программа является свободным программным обеспечением.   *
@@ -49,7 +49,6 @@ __published:	// IDE-managed Components
         TEdit *TimeBreakEdit;
         TLabel *TimeWorkLabel;
         TLabel *TimeBreakLabel;
-        TButton *ButCancel;
         TButton *ButApply;
         TButton *ButExit;
         TTrayIcon *TrayIcon;

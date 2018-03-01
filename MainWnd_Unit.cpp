@@ -3,9 +3,10 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы                                                     *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -65,7 +66,7 @@ void __fastcall TMainWnd::ButExitClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainWnd::ButOKClick(TObject *Sender)
 {
- WriteSettings();
+ UpdateWndSet();
  ButApply->Enabled = false;
  CloseWarningMsg();
  FlashWindow(Application->Handle,true);
