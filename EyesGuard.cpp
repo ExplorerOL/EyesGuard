@@ -31,6 +31,8 @@
 USEFORM("MainWnd_Unit.cpp", MainWnd);
 USEFORM("BreakWnd_Unit.cpp", BreakWnd);
 //---------------------------------------------------------------------------
+//Функция WinMain, начало программы
+
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
         try
