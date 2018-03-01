@@ -1828,14 +1828,14 @@ object MainWnd: TMainWnd
     TabOrder = 6
     OnEnter = CheckOffEnter
   end
-  object ButOK: TButton
+  object ButHide: TButton
     Left = 17
     Top = 232
     Width = 80
     Height = 35
     Caption = #1057#1082#1088#1099#1090#1100
     TabOrder = 7
-    OnClick = ButOKClick
+    OnClick = ButHideClick
   end
   object TrayIcon: TTrayIcon
     Visible = True
@@ -4012,9 +4012,9 @@ object MainWnd: TMainWnd
       OnClick = PopupMakeBrClick
     end
   end
-  object Timer: TTimer
+  object MainTimer: TTimer
     Interval = 0
-    OnTimer = TimerTimer
+    OnTimer = MainTimerTimer
     Left = 80
     Top = 8
   end

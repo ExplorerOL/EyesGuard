@@ -278,7 +278,7 @@ bool UpdateProgramSet()
   if (MainWnd->Off)
          {
            MainWnd->TrayIcon->IconIndex = 1;
-           MainWnd->Timer->Interval = 0;
+           MainWnd->MainTimer->Interval = 0;
            MainWnd->PopupMakeBr->Enabled = false;
            MainWnd->PopupTimerReset->Enabled = false;
            MainWnd->PopupOff->ImageIndex = 1;
@@ -286,7 +286,6 @@ bool UpdateProgramSet()
     else
          {
            MainWnd->TrayIcon->IconIndex = 0;
-           //MainWnd->Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
            MainWnd->PopupTimerResetClick(MainWnd->ButApply);
            MainWnd->PopupMakeBr->Enabled = true;
            MainWnd->PopupTimerReset->Enabled = true;
