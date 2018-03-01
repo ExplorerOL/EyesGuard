@@ -1,12 +1,11 @@
 object MainWnd: TMainWnd
   Left = 539
-  Top = 206
+  Top = 241
   HorzScrollBar.Visible = False
-  ActiveControl = ButCancel
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'EyesGuard v1.14'
+  Caption = 'EyesGuard v1.20'
   ClientHeight = 301
   ClientWidth = 374
   Color = clBtnFace
@@ -194,9 +193,7 @@ object MainWnd: TMainWnd
     Height = 13
     Align = alBottom
     Alignment = taCenter
-    Caption = 
-      ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'. www.eyesguard.fatal.ru   '#169'2012. GNU GP' +
-      'L.'
+    Caption = ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'.   '#169'2018. GNU GPL.'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -1783,23 +1780,14 @@ object MainWnd: TMainWnd
     OnEnter = TimeBreakEditClick
     OnKeyPress = TimeBreakEditKeyPress
   end
-  object ButCancel: TButton
-    Left = 185
-    Top = 232
-    Width = 80
-    Height = 35
-    Caption = #1054#1090#1084#1077#1085#1072
-    TabOrder = 2
-    OnClick = ButCancelClick
-  end
   object ButApply: TButton
-    Left = 67
+    Left = 131
     Top = 232
     Width = 110
     Height = 35
     Caption = #1055#1088#1080#1084#1077#1085#1080#1090#1100
     Enabled = False
-    TabOrder = 3
+    TabOrder = 2
     OnClick = ButApplyClick
   end
   object ButExit: TButton
@@ -1808,7 +1796,7 @@ object MainWnd: TMainWnd
     Width = 66
     Height = 35
     Caption = #1042#1099#1093#1086#1076
-    TabOrder = 4
+    TabOrder = 3
     OnClick = ButExitClick
   end
   object CheckSound: TCheckBox
@@ -1819,7 +1807,7 @@ object MainWnd: TMainWnd
     Caption = #1047#1074#1091#1082#1086#1074#1086#1077' '#1086#1087#1086#1074#1077#1097#1077#1085#1080#1077
     Checked = True
     State = cbChecked
-    TabOrder = 5
+    TabOrder = 4
     OnEnter = CheckSoundEnter
   end
   object CheckOff: TCheckBox
@@ -1828,7 +1816,7 @@ object MainWnd: TMainWnd
     Width = 242
     Height = 23
     Caption = #1042#1099#1082#1083#1102#1095#1080#1090#1100
-    TabOrder = 6
+    TabOrder = 5
     OnEnter = CheckOffEnter
   end
   object CheckEnMonOff: TCheckBox
@@ -1837,16 +1825,16 @@ object MainWnd: TMainWnd
     Width = 356
     Height = 23
     Caption = #1042#1099#1082#1083#1102#1095#1072#1090#1100'  '#1084#1086#1085#1080#1090#1086#1088' '#1085#1072' '#1074#1088#1077#1084#1103' '#1087#1077#1088#1077#1088#1099#1074#1072
-    TabOrder = 7
+    TabOrder = 6
     OnEnter = CheckOffEnter
   end
   object ButOK: TButton
-    Left = 9
+    Left = 17
     Top = 232
-    Width = 48
+    Width = 80
     Height = 35
-    Caption = 'OK'
-    TabOrder = 8
+    Caption = #1057#1082#1088#1099#1090#1100
+    TabOrder = 7
     OnClick = ButOKClick
   end
   object TrayIcon: TTrayIcon

@@ -3,12 +3,12 @@ object BreakWnd: TBreakWnd
   Top = 125
   BorderStyle = bsNone
   Caption = 'BreakWnd'
-  ClientHeight = 448
-  ClientWidth = 728
+  ClientHeight = 291
+  ClientWidth = 473
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
@@ -18,20 +18,20 @@ object BreakWnd: TBreakWnd
   OnClose = FormClose
   OnMouseMove = FormMouseMove
   OnShow = FormShow
-  PixelsPerInch = 140
-  TextHeight = 20
+  PixelsPerInch = 96
+  TextHeight = 13
   object BreakLabel1: TLabel
     Left = 0
     Top = 0
-    Width = 728
-    Height = 209
+    Width = 473
+    Height = 136
     Align = alTop
     Alignment = taCenter
     AutoSize = False
     Caption = #1055#1045#1056#1045#1056#1067#1042'!!!'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clLime
-    Font.Height = -39
+    Font.Height = -25
     Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
@@ -40,9 +40,9 @@ object BreakWnd: TBreakWnd
   end
   object BreakLabel2: TLabel
     Left = 0
-    Top = 209
-    Width = 728
-    Height = 223
+    Top = 136
+    Width = 473
+    Height = 145
     Align = alTop
     Alignment = taCenter
     AutoSize = False
@@ -50,7 +50,7 @@ object BreakWnd: TBreakWnd
     Color = clBtnFace
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clYellow
-    Font.Height = -30
+    Font.Height = -20
     Font.Name = 'Arial'
     Font.Style = []
     ParentColor = False
