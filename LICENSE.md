@@ -1,4 +1,4 @@
-Copyright (c) 2008-2012: by Vorobyov Dmitry (eyesguard@yandex.ru) and others.
+Copyright (c) 2008-2018: by Vorobyov Dmitry (eyesguard@yandex.ru) and others.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

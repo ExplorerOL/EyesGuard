@@ -3,9 +3,10 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы                                                     *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -34,28 +35,32 @@
 //TBreakWnd *BreakWnd;
 
 //---------------------------------------------------------------------------
+//Конструктор формы
 __fastcall TBreakWnd::TBreakWnd(TComponent* Owner)
         : TForm(Owner)
 {
 
 }
 //---------------------------------------------------------------------------
+//Действия при закрытии формы
 
 void __fastcall TBreakWnd::FormClose(TObject *Sender, TCloseAction &Action)
 {
  MainWnd->IsBreakNow = true;
  MainWnd->IsWarningNow = true;
- MainWnd->TimerTimer(this);
+ MainWnd->MainTimerTimer(this);
 }
 //---------------------------------------------------------------------------
+//Включение монитора при движении мыши, если он был выключен
 
 void __fastcall TBreakWnd::FormMouseMove(TObject *Sender,
       TShiftState Shift, int X, int Y)
 {
  if ((MainWnd->EnMonOff) && (MainWnd->IsBreakNow))
-        SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,1);
+        SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,-1);
 }
 //---------------------------------------------------------------------------
+//Перевод фокуса на форму перерыва, он не остался на предыдущем приложении
 
 void __fastcall TBreakWnd::FormShow(TObject *Sender)
 {

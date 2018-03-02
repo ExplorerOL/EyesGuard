@@ -1,14 +1,13 @@
 object MainWnd: TMainWnd
-  Left = 539
-  Top = 206
+  Left = 618
+  Top = 503
   HorzScrollBar.Visible = False
-  ActiveControl = ButCancel
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'EyesGuard v1.14'
-  ClientHeight = 301
-  ClientWidth = 374
+  Caption = 'EyesGuard v1.20'
+  ClientHeight = 288
+  ClientWidth = 354
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -160,7 +159,7 @@ object MainWnd: TMainWnd
   object OptionsLabel: TLabel
     Left = 0
     Top = 0
-    Width = 374
+    Width = 354
     Height = 29
     Align = alTop
     Alignment = taCenter
@@ -173,30 +172,14 @@ object MainWnd: TMainWnd
     ParentFont = False
     Layout = tlCenter
   end
-  object TimeWorkLabel: TLabel
-    Left = 32
-    Top = 43
-    Width = 243
-    Height = 20
-    Caption = #1042#1088#1077#1084#1103' '#1084#1077#1078#1076#1091' '#1087#1077#1088#1077#1088#1099#1074#1072#1084#1080' ('#1084#1080#1085')'
-  end
-  object TimeBreakLabel: TLabel
-    Left = 32
-    Top = 86
-    Width = 233
-    Height = 20
-    Caption = #1044#1083#1080#1090#1077#1083#1100#1085#1086#1089#1090#1100' '#1087#1077#1088#1077#1088#1099#1074#1072' ('#1084#1080#1085')'
-  end
   object InfoLabel: TLabel
     Left = 0
-    Top = 288
-    Width = 374
+    Top = 275
+    Width = 354
     Height = 13
     Align = alBottom
     Alignment = taCenter
-    Caption = 
-      ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'. www.eyesguard.fatal.ru   '#169'2012. GNU GP' +
-      'L.'
+    Caption = ' '#1040#1074#1090#1086#1088': '#1042#1086#1088#1086#1073#1100#1077#1074' '#1044#1084#1080#1090#1088#1080#1081' '#1080' '#1076#1088'.   '#169'2018. GNU GPL.'
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -206,8 +189,8 @@ object MainWnd: TMainWnd
     WordWrap = True
   end
   object Image1: TImage
-    Left = 288
-    Top = 160
+    Left = 272
+    Top = 168
     Width = 57
     Height = 57
     Picture.Data = {
@@ -1754,16 +1737,55 @@ object MainWnd: TMainWnd
     Stretch = True
     Transparent = True
   end
-  object TimeWorkEdit: TEdit
-    Left = 312
+  object Panel1: TPanel
+    Left = 16
     Top = 40
+    Width = 321
+    Height = 81
+    TabOrder = 8
+    object TimeWorkLabel: TLabel
+      Left = 24
+      Top = 11
+      Width = 207
+      Height = 16
+      Caption = #1042#1088#1077#1084#1103' '#1084#1077#1078#1076#1091' '#1087#1077#1088#1077#1088#1099#1074#1072#1084#1080' ('#1084#1080#1085')'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TimeBreakLabel: TLabel
+      Left = 24
+      Top = 45
+      Width = 196
+      Height = 16
+      Caption = #1044#1083#1080#1090#1077#1083#1100#1085#1086#1089#1090#1100' '#1087#1077#1088#1077#1088#1099#1074#1072' ('#1084#1080#1085')'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+  end
+  object TimeWorkEdit: TEdit
+    Left = 272
+    Top = 48
     Width = 40
-    Height = 28
+    Height = 24
     AutoSelect = False
     BevelOuter = bvNone
     Ctl3D = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MaxLength = 3
     ParentCtl3D = False
+    ParentFont = False
     TabOrder = 0
     Text = '30'
     OnClick = TimeWorkEditClick
@@ -1771,83 +1793,116 @@ object MainWnd: TMainWnd
     OnKeyPress = TimeWorkEditKeyPress
   end
   object TimeBreakEdit: TEdit
-    Left = 312
+    Left = 272
     Top = 83
     Width = 40
-    Height = 28
+    Height = 24
     AutoSelect = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     MaxLength = 3
+    ParentFont = False
     TabOrder = 1
     Text = '10'
     OnClick = TimeBreakEditClick
     OnEnter = TimeBreakEditClick
     OnKeyPress = TimeBreakEditKeyPress
   end
-  object ButCancel: TButton
-    Left = 185
-    Top = 232
-    Width = 80
-    Height = 35
-    Caption = #1054#1090#1084#1077#1085#1072
-    TabOrder = 2
-    OnClick = ButCancelClick
-  end
   object ButApply: TButton
-    Left = 67
-    Top = 232
+    Left = 130
+    Top = 240
     Width = 110
-    Height = 35
+    Height = 27
     Caption = #1055#1088#1080#1084#1077#1085#1080#1090#1100
     Enabled = False
-    TabOrder = 3
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
     OnClick = ButApplyClick
   end
   object ButExit: TButton
-    Left = 290
-    Top = 232
+    Left = 266
+    Top = 240
     Width = 66
-    Height = 35
+    Height = 27
     Caption = #1042#1099#1093#1086#1076
-    TabOrder = 4
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
     OnClick = ButExitClick
   end
   object CheckSound: TCheckBox
-    Left = 15
-    Top = 158
-    Width = 234
+    Left = 23
+    Top = 166
+    Width = 194
     Height = 23
     Caption = #1047#1074#1091#1082#1086#1074#1086#1077' '#1086#1087#1086#1074#1077#1097#1077#1085#1080#1077
     Checked = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
     State = cbChecked
-    TabOrder = 5
+    TabOrder = 4
     OnEnter = CheckSoundEnter
   end
   object CheckOff: TCheckBox
-    Left = 15
-    Top = 192
-    Width = 242
+    Left = 23
+    Top = 200
+    Width = 170
     Height = 23
     Caption = #1042#1099#1082#1083#1102#1095#1080#1090#1100
-    TabOrder = 6
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
     OnEnter = CheckOffEnter
   end
   object CheckEnMonOff: TCheckBox
-    Left = 15
-    Top = 124
+    Left = 23
+    Top = 132
     Width = 356
     Height = 23
     Caption = #1042#1099#1082#1083#1102#1095#1072#1090#1100'  '#1084#1086#1085#1080#1090#1086#1088' '#1085#1072' '#1074#1088#1077#1084#1103' '#1087#1077#1088#1077#1088#1099#1074#1072
-    TabOrder = 7
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
     OnEnter = CheckOffEnter
   end
-  object ButOK: TButton
-    Left = 9
-    Top = 232
-    Width = 48
-    Height = 35
-    Caption = 'OK'
-    TabOrder = 8
-    OnClick = ButOKClick
+  object ButHide: TButton
+    Left = 17
+    Top = 240
+    Width = 80
+    Height = 27
+    Caption = #1057#1082#1088#1099#1090#1100
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+    OnClick = ButHideClick
   end
   object TrayIcon: TTrayIcon
     Visible = True
@@ -1860,6 +1915,7 @@ object MainWnd: TMainWnd
     IconIndex = 8
     AnimateInterval = 2000
     OnClick = TrayIconClick
+    OnMouseMove = TrayIconMouseMove
     Left = 16
     Top = 8
   end
@@ -4024,9 +4080,9 @@ object MainWnd: TMainWnd
       OnClick = PopupMakeBrClick
     end
   end
-  object Timer: TTimer
+  object MainTimer: TTimer
     Interval = 0
-    OnTimer = TimerTimer
+    OnTimer = MainTimerTimer
     Left = 80
     Top = 8
   end
@@ -4436,10 +4492,5 @@ object MainWnd: TMainWnd
       F000020007E0407FE400000000000C7FFC0080018001337FFC0080018001727F
       FC00C003C003CCFFFC00F00FF00FC1FF00000000000000000000000000000000
       000000000000}
-  end
-  object HintTimer: TTimer
-    OnTimer = HintTimerTimer
-    Left = 112
-    Top = 8
   end
 end

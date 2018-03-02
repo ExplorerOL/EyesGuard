@@ -3,9 +3,10 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы                                                     *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -37,35 +38,40 @@ TMainWnd *MainWnd;
 TBreakWnd *BreakWnd;
 
 //---------------------------------------------------------------------------
+//Конструктор главного окна
 __fastcall TMainWnd::TMainWnd(TComponent* Owner)
         : TForm(Owner)
 {
-  //IsBreakNow = false;
-  //IsWarningNow = false;
-  //Counter = 0;
-
+//При запуске программы устанавливаем настройки по умолчанию
   EnMonOff = true;
   Sound = true;
   Off = false;
 
+//Считываем настройки из файла, если они были сохранены
   ReadSettings();
+//Сбрасываем таймер
   PopupTimerResetClick(MainWnd);
-  //Timer->Enabled = true;
+
+
+//Не понятно, почему сначала TrayIcon должна быть false, но иначе не работает
   TrayIcon->Visible = false;
   TrayIcon->Visible = true;
+
 
 
 }
 
 //---------------------------------------------------------------------------
+//Нажата кнопка выход
 void __fastcall TMainWnd::ButExitClick(TObject *Sender)
 {
  Application->Terminate();
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainWnd::ButOKClick(TObject *Sender)
+
+void __fastcall TMainWnd::ButHideClick(TObject *Sender)
 {
- WriteSettings();
+ UpdateWndSet();
  ButApply->Enabled = false;
  CloseWarningMsg();
  FlashWindow(Application->Handle,true);
@@ -80,42 +86,33 @@ void __fastcall TMainWnd::ButApplyClick(TObject *Sender)
  CloseWarningMsg();
  FlashWindow(Application->Handle,true);
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainWnd::ButCancelClick(TObject *Sender)
-{
- UpdateWndSet();
- ButApply->Enabled = false;
- Hide();
-}
+
 //---------------------------------------------------------------------------
 
-void __fastcall TMainWnd::TimerTimer(TObject *Sender)
+void __fastcall TMainWnd::MainTimerTimer(TObject *Sender)
 {
   if (IsBreakNow)
 
         if (IsWarningNow)
              { // Установка режима Work из BreakWarning
 
-               //Counter = 0;
+
                if (EnMonOff) SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,-1);
                if (BreakWnd != NULL)
                         {
                          delete BreakWnd;
                          BreakWnd = NULL;
                         }
-             //  BreakWnd->Close();
-               //IsWarningNow = false;
-               //IsBreakNow = false;
-               //Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+
                PopupTimerResetClick(Sender);
                MainWnd->PopupTimerReset->Enabled = true;
-              // Beep(2000,100);
+           
 
              }
           else
              { // Установка режима BreakWarning из Break
 
-               Timer->Interval = 1000;
+               MainTimer->Interval = 1000;
 
                if (Sound)
                 { Beep(1000,500);
@@ -141,19 +138,19 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                             BreakWnd->Cursor = crNone;
                             BreakWnd->SetFocus();
                            }
-                         Timer->Interval = 5000;
+                         MainTimer->Interval = 5000;
                          MainWnd->PopupTimerReset->Enabled = false;
                          Counter++;
                          return;
                         }
                if (EnMonOff)
                  {
-                  SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,1);
+                  SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,2);
                  }
 
                IsWarningNow = false;
                IsBreakNow = true;
-               Timer->Interval = MainWnd->TimeBreak*TIMERMULT;
+               MainTimer->Interval = MainWnd->TimeBreak*TIMERMULT;
 
                Counter = 0;
 
@@ -164,15 +161,15 @@ void __fastcall TMainWnd::TimerTimer(TObject *Sender)
                 Counter++;
 
 
-           if (Counter == 1) {  Timer->Interval = 3000;
+           if (Counter == 1) {  MainTimer->Interval = 3000;
                             MessageBox(NULL, "Через 1 МИНУТУ будет перерыв!",
                             "EyesGuard !Внимание! ",MB_SYSTEMMODAL+MB_ICONWARNING);
 
                              }
 
            if (Counter == 2)  { CloseWarningMsg();
-                            Timer->Interval = TIMERMULT; }
-           if (Counter == 3) Timer->Interval = 1000;
+                            MainTimer->Interval = TIMERMULT; }
+           if (Counter == 3) MainTimer->Interval = 1000;
            if (Counter == 4) MessageBox(NULL, "Через 10 СЕКУНД будет перерыв!",
                            "EyesGuard !Внимание! ", MB_SYSTEMMODAL+MB_ICONWARNING);
            if (Counter == 7) CloseWarningMsg();
@@ -196,85 +193,69 @@ void __fastcall TMainWnd::FormClose(TObject *Sender, TCloseAction &Action)
  ButApply->Enabled = false;
  Hide();
 }
+
 //---------------------------------------------------------------------------
-
-/* Может вызвать заторможенное поведение программы
-void __fastcall TMainWnd::FormCreate(TObject *Sender)
-{
-
-//Установка низкого приоритета
-HANDLE ProcessHandle;
-HANDLE ThreadHandle;
-DWORD ProcessID = GetCurrentProcessId();
-ProcessHandle = OpenProcess(PROCESS_ALL_ACCESS,false,ProcessID);
-SetPriorityClass(ProcessHandle,IDLE_PRIORITY_CLASS);
-ThreadHandle = GetCurrentThread();
-SetThreadPriority(ThreadHandle,THREAD_PRIORITY_LOWEST);
-
-
-}
-*/
-//---------------------------------------------------------------------------
-
+//Щелочок на иконке в трее
 void __fastcall TMainWnd::TrayIconClick(TObject *Sender)
 {
  Show();
 }
 //---------------------------------------------------------------------------
-
+//Проверка ввода цифр в поле длительности перерыва
 void __fastcall TMainWnd::TimeWorkEditKeyPress(TObject *Sender, char &Key)
 {
     if  ( ((Key < '0') || (Key > '9')) && (Key != 8) ) Key = 0;
 }
 //---------------------------------------------------------------------------
-
+//Проверка ввода цифр в поле времени между перерывами
 void __fastcall TMainWnd::TimeBreakEditKeyPress(TObject *Sender, char &Key)
 {
   if  ( ((Key < '0') || (Key > '9')) && (Key != 8) ) Key = 0;
 }
 //---------------------------------------------------------------------------
-
+//Щелчок на поле время между перерывами
 void __fastcall TMainWnd::TimeWorkEditClick(TObject *Sender)
 {
  ButApply->Enabled = true;
 }
 //---------------------------------------------------------------------------
-
+//Щелчок на поле длительности перерыва
 void __fastcall TMainWnd::TimeBreakEditClick(TObject *Sender)
 {
   ButApply->Enabled = true;
 }
 //---------------------------------------------------------------------------
-
+//Изменение настройки "Выключать монитор"
 
 void __fastcall TMainWnd::CheckEnMonOffEnter(TObject *Sender)
 {
  ButApply->Enabled = true;
 }
 //---------------------------------------------------------------------------
-
+//Изменение нестройки "Звуковое оповещение"
 void __fastcall TMainWnd::CheckSoundEnter(TObject *Sender)
 {
   ButApply->Enabled = true;
 }
 //---------------------------------------------------------------------------
-
+//Изменение настройки "Выключить"
 void __fastcall TMainWnd::CheckOffEnter(TObject *Sender)
 {
  ButApply->Enabled = true;
 }
 
 //---------------------------------------------------------------------------
-
-
-
 //Begin Popup Menu---
+
+//---------------------------------------------------------------------------
+//Выбран пункт "Выход" в контекстном меню
 void __fastcall TMainWnd::PopupExitClick(TObject *Sender)
 {
  Application->Terminate();
 }
 
 //---------------------------------------------------------------------------
+//Выбран пункт "Выключить" в контекстном меню
 
 void __fastcall TMainWnd::PopupOffClick(TObject *Sender)
 {
@@ -290,6 +271,7 @@ void __fastcall TMainWnd::PopupOffClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
+//Выбран пункт "Настройки" в контектстном меню -> показать главное окно
 
 void __fastcall TMainWnd::PopupSetClick(TObject *Sender)
 {
@@ -297,14 +279,14 @@ void __fastcall TMainWnd::PopupSetClick(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-
+//Выбран пункт "Сделать перерыв" в контектстном меню
 void __fastcall TMainWnd::PopupMakeBrClick(TObject *Sender)
 {
   Counter = 0;
   IsBreakNow = false;
   IsWarningNow = true;
   CloseWarningMsg();
-  MainWnd->TimerTimer(PopupMakeBr);
+  MainWnd->MainTimerTimer(PopupMakeBr);
 
 }
 //End Popup Menu---
@@ -318,33 +300,40 @@ void __fastcall TMainWnd::FormShow(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
+//Выбран пункт "Сбросить таймер" в контектстном меню
+//BreakTime - время до перерыва
 void __fastcall TMainWnd::PopupTimerResetClick(TObject *Sender)
 {
-Timer->Enabled = false;
+MainTimer->Enabled = false;
 
 Counter = 0;
 IsWarningNow = false;
 IsBreakNow = false;
+
   if (!(Off)) {
-    Timer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+    MainTimer->Interval = MainWnd->TimeWork * TIMERMULT - TIMEFIRSTWRN;
     BreakTime = Now();
     BreakTime += MainWnd->TimeWork * TIMEMULT;
   }
-Timer->Enabled = true;
+MainTimer->Enabled = true;
 }
+
+
+
+
+
 //---------------------------------------------------------------------------
+//Функция отображения времени до перерыва при наведении мыши на иконку в трее
 
-
-
-
-void __fastcall TMainWnd::HintTimerTimer(TObject *Sender)
+void __fastcall TMainWnd::TrayIconMouseMove(TObject *Sender,
+      TShiftState Shift, int X, int Y)
 {
-  if (!Off) {
-    MainWnd->TrayIcon->Hint = "Eyesguard\nДо перерыва " + (BreakTime-Now()).FormatString("h:mm:ss");
+if (!Off) {
+    MainWnd->TrayIcon->Hint = "EyesGuard\nДо перерыва " + (BreakTime-Now()).FormatString("h:mm:ss");
   } else {
-    MainWnd->TrayIcon->Hint = "Eyesguard\nВыключено";
+    MainWnd->TrayIcon->Hint = "EyesGuard\nВыключено";
   }
+
 }
 //---------------------------------------------------------------------------
-
 

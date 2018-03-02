@@ -3,9 +3,10 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы www.eyesguard.fatal.ru                                   *
+* Сайт программы                                                     *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012.           *
+*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
+*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
 *    Данная программа является свободным программным обеспечением.   *
 * Вы вправе распространять ее и/или модифицировать в соответствии    *
 * с условиями Генеральной Общественной Лицензии GNU в том виде,      *
@@ -39,7 +40,7 @@
 #include <Graphics.hpp>
 #define TIMERMULT 60000
 #define TIMEMULT (1.0/60/24)
-#define TIMEFIRSTWRN 1
+#define TIMEFIRSTWRN 73000
 //---------------------------------------------------------------------------
 class TMainWnd : public TForm
 {
@@ -47,16 +48,13 @@ __published:	// IDE-managed Components
         TLabel *OptionsLabel;
         TEdit *TimeWorkEdit;
         TEdit *TimeBreakEdit;
-        TLabel *TimeWorkLabel;
-        TLabel *TimeBreakLabel;
-        TButton *ButCancel;
         TButton *ButApply;
         TButton *ButExit;
         TTrayIcon *TrayIcon;
         TImageList *TrayImageList;
         TPopupMenu *PopupMenu;
         TMenuItem *PopupExit;
-        TTimer *Timer;
+        TTimer *MainTimer;
         TCheckBox *CheckSound;
         TCheckBox *CheckOff;
         TMenuItem *PopupSet;
@@ -68,14 +66,15 @@ __published:	// IDE-managed Components
         TMenuItem *PopupTimerReset;
         TImageList *PopupImageList;
         TImage *Image1;
-        TButton *ButOK;
-        TTimer *HintTimer;
+        TButton *ButHide;
+        TPanel *Panel1;
+        TLabel *TimeWorkLabel;
+        TLabel *TimeBreakLabel;
+        void __fastcall ButHideClick(TObject *Sender);
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
-        void __fastcall ButCancelClick(TObject *Sender);
-        void __fastcall TimerTimer(TObject *Sender);
+        void __fastcall MainTimerTimer(TObject *Sender);
         void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
-     //   void __fastcall FormCreate(TObject *Sender);
         void __fastcall TrayIconClick(TObject *Sender);
         void __fastcall TimeWorkEditKeyPress(TObject *Sender, char &Key);
         void __fastcall TimeBreakEditKeyPress(TObject *Sender, char &Key);
@@ -90,8 +89,8 @@ __published:	// IDE-managed Components
         void __fastcall FormShow(TObject *Sender);
         void __fastcall PopupMakeBrClick(TObject *Sender);
         void __fastcall PopupTimerResetClick(TObject *Sender);
-        void __fastcall ButOKClick(TObject *Sender);
-        void __fastcall HintTimerTimer(TObject *Sender);
+        void __fastcall TrayIconMouseMove(TObject *Sender,
+          TShiftState Shift, int X, int Y);
 
 private:	// User declarations
 
