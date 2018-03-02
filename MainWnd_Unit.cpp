@@ -311,7 +311,7 @@ IsWarningNow = false;
 IsBreakNow = false;
 
   if (!(Off)) {
-    MainTimer->Interval = (MainWnd->TimeWork - TIMEFIRSTWRN)*TIMERMULT;
+    MainTimer->Interval = MainWnd->TimeWork * TIMERMULT - TIMEFIRSTWRN;
     BreakTime = Now();
     BreakTime += MainWnd->TimeWork * TIMEMULT;
   }
@@ -324,15 +324,16 @@ MainTimer->Enabled = true;
 
 //---------------------------------------------------------------------------
 //Функция отображения времени до перерыва при наведении мыши на иконку в трее
-void __fastcall TMainWnd::HintTimerTimer(TObject *Sender)
+
+void __fastcall TMainWnd::TrayIconMouseMove(TObject *Sender,
+      TShiftState Shift, int X, int Y)
 {
-  if (!Off) {
-    MainWnd->TrayIcon->Hint = "Eyesguard\nДо перерыва " + (BreakTime-Now()).FormatString("h:mm:ss");
+if (!Off) {
+    MainWnd->TrayIcon->Hint = "EyesGuard\nДо перерыва " + (BreakTime-Now()).FormatString("h:mm:ss");
   } else {
-    MainWnd->TrayIcon->Hint = "Eyesguard\nВыключено";
+    MainWnd->TrayIcon->Hint = "EyesGuard\nВыключено";
   }
+
 }
 //---------------------------------------------------------------------------
-
-
 

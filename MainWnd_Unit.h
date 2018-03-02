@@ -40,7 +40,7 @@
 #include <Graphics.hpp>
 #define TIMERMULT 60000
 #define TIMEMULT (1.0/60/24)
-#define TIMEFIRSTWRN 1
+#define TIMEFIRSTWRN 73000
 //---------------------------------------------------------------------------
 class TMainWnd : public TForm
 {
@@ -48,8 +48,6 @@ __published:	// IDE-managed Components
         TLabel *OptionsLabel;
         TEdit *TimeWorkEdit;
         TEdit *TimeBreakEdit;
-        TLabel *TimeWorkLabel;
-        TLabel *TimeBreakLabel;
         TButton *ButApply;
         TButton *ButExit;
         TTrayIcon *TrayIcon;
@@ -69,7 +67,9 @@ __published:	// IDE-managed Components
         TImageList *PopupImageList;
         TImage *Image1;
         TButton *ButHide;
-        TTimer *HintTimer;
+        TPanel *Panel1;
+        TLabel *TimeWorkLabel;
+        TLabel *TimeBreakLabel;
         void __fastcall ButHideClick(TObject *Sender);
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
@@ -89,8 +89,8 @@ __published:	// IDE-managed Components
         void __fastcall FormShow(TObject *Sender);
         void __fastcall PopupMakeBrClick(TObject *Sender);
         void __fastcall PopupTimerResetClick(TObject *Sender);
-
-        void __fastcall HintTimerTimer(TObject *Sender);
+        void __fastcall TrayIconMouseMove(TObject *Sender,
+          TShiftState Shift, int X, int Y);
 
 private:	// User declarations
 

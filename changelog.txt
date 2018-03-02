@@ -1,6 +1,8 @@
 v1.20 (01.03.2018)
 +fixed bug of timer reset after main window closing
 +removed unnecessary buttons
++corrected time calculation in TrayIcon hint
++optimized program
 
 v1.14ru (09.10.2012)
 + shows time up to break
