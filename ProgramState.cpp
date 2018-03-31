@@ -1,25 +1,24 @@
 
 /*********************************************************************
 *                                                                    *
-* EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
-*             работая на компьютере.                                 *
-* Сайт программы http://eyesguard.ru                                 *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
-*    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
-*    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
-*    Данная программа является свободным программным обеспечением.   *
-* Вы вправе распространять ее и/или модифицировать в соответствии    *
-* с условиями Генеральной Общественной Лицензии GNU в том виде,      *
-* как она была опубликована Фондом Свободного ПО                     *
-* (Free Software Foundation); либо версии                            *
-* 2 Лицензии либо (по вашему желанию) любой более поздней версии.    *
+* EyesGuard - cares about youe vision during working on PC!                               *
+* Site of program http://eyesguard.ru                                *
+*                              					     *
+*    © Dmitry Vorobjev (eyesguard@yandex.ru), 2011,                  *
+*    © Mihail Buryakov   (mihail.buryakov@gmail.com), 2012,          *
+*    © Dmitry Vorobjev (eyesguard@yandex.ru), 2018.                  *
+*   This program is free software; you can redistribute it and/or    *
+*   modify it under the terms of the GNU General Public License as   *
+*   published by the Free Software Foundation; either version 2 of   *
+*   the License, or at your option) any later version.               *
 *                                                                    *
-* Программа распространяется в надежде, что она будет полезной,      *
-* но БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙНЫХ ОБЯЗАТЕЛЬСТВ; даже без      *
-* косвенных гарантийных обязательств, связанных с ПОТРЕБИТЕЛЬСКИМИ   *
-* СВОЙСТВАМИ и ПРИГОДНОСТЬЮ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Для получения    *
-* более подробной информации ознакомьтесь с Генеральной              *
-* Общественной Лицензией GNU (http://www.gnu.org/licenses/gpl.html). *
+*   This program is distributed in the hope that it will be useful,  *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of   *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the    *
+*   GNU General Public License for more details.                     *
+*                                                                    *
+*   The official publication of the license GNU GPL you can          *
+*   find here: http://www.gnu.org/licenses/gpl.html                  *
 *                                                                    *
 *********************************************************************/
 
