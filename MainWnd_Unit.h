@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы                                                     *
+* Сайт программы http://eyesguard.ru                                 *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
@@ -37,10 +37,9 @@
 #include <Menus.hpp>
 #include <ExtCtrls.hpp>
 #include "BreakWnd_Unit.h"
+#include "ProgramState.h"
 #include <Graphics.hpp>
-#define TIMERMULT 60000
-#define TIMEMULT (1.0/60/24)
-#define TIMEFIRSTWRN 73000
+
 //---------------------------------------------------------------------------
 class TMainWnd : public TForm
 {
@@ -60,7 +59,6 @@ __published:	// IDE-managed Components
         TMenuItem *PopupSet;
         TMenuItem *PopupOff;
         TMenuItem *PopupMakeBr;
-        TCheckBox *CheckEnMonOff;
         TLabel *InfoLabel;
         TMenuItem *PopupBreakLine;
         TMenuItem *PopupTimerReset;
@@ -70,6 +68,7 @@ __published:	// IDE-managed Components
         TPanel *Panel1;
         TLabel *TimeWorkLabel;
         TLabel *TimeBreakLabel;
+	TCheckBox *CheckActivity;
         void __fastcall ButHideClick(TObject *Sender);
         void __fastcall ButExitClick(TObject *Sender);
         void __fastcall ButApplyClick(TObject *Sender);
@@ -80,7 +79,6 @@ __published:	// IDE-managed Components
         void __fastcall TimeBreakEditKeyPress(TObject *Sender, char &Key);
         void __fastcall TimeWorkEditClick(TObject *Sender);
         void __fastcall TimeBreakEditClick(TObject *Sender);
-        void __fastcall CheckEnMonOffEnter(TObject *Sender);
         void __fastcall CheckSoundEnter(TObject *Sender);
         void __fastcall CheckOffEnter(TObject *Sender);
         void __fastcall PopupOffClick(TObject *Sender);
@@ -91,29 +89,24 @@ __published:	// IDE-managed Components
         void __fastcall PopupTimerResetClick(TObject *Sender);
         void __fastcall TrayIconMouseMove(TObject *Sender,
           TShiftState Shift, int X, int Y);
+	void __fastcall CheckActivityEnter(TObject *Sender);
+        void __fastcall ShowHintMessage();
+        void __fastcall HideHintMessage();
 
 private:	// User declarations
 
 public:		// User declarations
-
-unsigned char TimeWork;
-unsigned char TimeBreak;
-bool EnMonOff;
-bool Sound;
-bool Off;
-TDateTime BreakTime;
-
-bool IsBreakNow;
-bool IsWarningNow;
-unsigned char Counter;
-
-double* BreakWnd1;
-
-
+        
         __fastcall TMainWnd(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TMainWnd *MainWnd;
+
+
+void updateWindow();
+bool updateState();
+void CloseWarningMsg();
+
 
 
 //---------------------------------------------------------------------------

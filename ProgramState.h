@@ -25,32 +25,65 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef BreakWnd_UnitH
-#define BreakWnd_UnitH
+#ifndef ProgramStateH
+#define ProgramStateH
+#include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
-#include <Classes.hpp>
-#include <Controls.hpp>
-#include <StdCtrls.hpp>
-#include <Forms.hpp>
-#include "MainWnd_Unit.h"
-#include "CGAUGES.h"
-//---------------------------------------------------------------------------
-class TBreakWnd : public TForm
-{
-__published:	// IDE-managed Components
-        TLabel *BreakLabel1;
-        TLabel *BreakLabel2;
-	TLabel *LabelTimeBreakLeft;
-	TCGauge *GaugeBreakProgress;
-        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
-        void __fastcall FormShow(TObject *Sender);
-private:	// User declarations
-public:		// User declarations
-        __fastcall TBreakWnd(TComponent* Owner);
+#define setfileName "set.dat"
+#define setfileDir  "."
+#define setfilePath     setfileDir "\\" setfileName
+
+
+
+//Структура, хранящая настройки программы
+struct Settings{
+unsigned char timeWork;
+unsigned char timeBreak;
+bool monitorUserActivity;
+bool soundOn;
+bool programTurnedOff;
+};
+
+
+//Класс, описыв-й состояние программы
+
+class ProgramState {
+
+public:
+	ProgramState();
+        Settings getSettings();
+        void setSettings(const Settings& newSettings);
+	void timerTick();
+        void takeBreak();
+        void resetCounterTimeWork();
+        TDateTime getTimeWorkLeft();
+        TDateTime getTimeBreakLeft();
+        void interruptBreak();
+
+
+private:
+      	Settings EGSettings;
+        unsigned counterTimeWork;
+        unsigned counterTimeBreak;
+        bool breakInProgress;
+        bool bUserActive;
+
+
+        void readSettings();
+        void writeSettings();
+	bool checkSettings(const Settings& settingsToCheck);
+
+        void workTick();
+        void breakTick();
+
 
 };
-//---------------------------------------------------------------------------
 
 
-//---------------------------------------------------------------------------
+extern ProgramState EGState;
+
+
+
 #endif
+
+
