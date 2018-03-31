@@ -25,49 +25,32 @@
 
 //---------------------------------------------------------------------------
 
-#include <vcl.h>
-#pragma hdrstop
+#ifndef BreakWnd_UnitH
+#define BreakWnd_UnitH
 //---------------------------------------------------------------------------
-USEFORM("MainWnd_Unit.cpp", MainWnd);
-USEFORM("BreakWnd_Unit.cpp", BreakWnd);
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include "MainWnd_Unit.h"
+#include "CGAUGES.h"
 //---------------------------------------------------------------------------
-WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+class TBreakWnd : public TForm
 {
-        try
-         {
+__published:	// IDE-managed Components
+        TLabel *BreakLabel1;
+        TLabel *BreakLabel2;
+	TLabel *LabelTimeBreakLeft;
+	TCGauge *GaugeBreakProgress;
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall FormShow(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+        __fastcall TBreakWnd(TComponent* Owner);
 
-
-		HANDLE* EGMutex;
-		*EGMutex = CreateMutex(NULL, true, "EGMutex");
-		if (GetLastError()==ERROR_ALREADY_EXISTS)
-    		    {
-  		      ShowMessage("Can't start second copy of EyesGuard!");
-  		      Application->Terminate();
-  		    }
-
-                Application->Initialize();
-                Application->ShowMainForm = false;
-                Application->Title = "EyesGuard";
-                Application->CreateForm(__classid(TMainWnd), &MainWnd);
-		Application->Run();
-         }
-
-
-        catch (Exception &exception)
-        {
-                 Application->ShowException(&exception);
-        }
-        catch (...)
-        {
-                 try
-                 {
-                         throw Exception("");
-                 }
-                 catch (Exception &exception)
-                 {
-                        Application->ShowException(&exception);
-                 }
-        }
-        return 0;
-}
+};
 //---------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------
+#endif

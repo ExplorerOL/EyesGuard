@@ -4,22 +4,17 @@
   <MACROS>
     <VERSION value="BCB.06.00"/>
     <PROJECT value="EyesGuard.exe"/>
-    <OBJFILES value="EyesGuard.obj MainForm.obj InputOutput.obj BreakForm.obj"/>
+    <OBJFILES value="EyesGuard.obj MainWnd_Unit.obj BreakWnd_Unit.obj ProgramState.obj"/>
     <RESFILES value="EyesGuard.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
     <DEFFILE value=""/>
-    <RESDEPEN value="$(RESFILES) MainForm.dfm BreakForm.dfm"/>
+    <RESDEPEN value="$(RESFILES) MainWnd_Unit.dfm BreakWnd_Unit.dfm"/>
     <LIBFILES value=""/>
     <LIBRARIES value="vclx.lib bcbsmp.lib rtl.lib vcl.lib"/>
     <SPARELIBS value="vcl.lib rtl.lib bcbsmp.lib vclx.lib"/>
-    <PACKAGES value="vcl.bpi rtl.bpi dbrtl.bpi adortl.bpi vcldb.bpi vclx.bpi bdertl.bpi 
-      vcldbx.bpi ibxpress.bpi dsnap.bpi cds.bpi bdecds.bpi qrpt.bpi teeui.bpi 
-      teedb.bpi tee.bpi dss.bpi teeqr.bpi visualclx.bpi visualdbclx.bpi 
-      dsnapcrba.bpi dsnapcon.bpi bcbsmp.bpi vclie.bpi xmlrtl.bpi inet.bpi 
-      inetdbbde.bpi inetdbxpress.bpi inetdb.bpi nmfast.bpi webdsnap.bpi 
-      bcbie.bpi websnap.bpi soaprtl.bpi dclocx.bpi dbexpress.bpi dbxcds.bpi 
-      indy.bpi bcb2kaxserver.bpi"/>
+    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi bcbclxide.bpi visualclx.bpi cgdide.bpi bcbsmp.bpi 
+      direct.bpi IDETools.bpi stride.bpi"/>
     <PATHCPP value=".;"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
@@ -30,13 +25,14 @@
     <USERDEFINES value=""/>
     <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="EyesGuard.cpp"/>
-    <INCLUDEPATH value="C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl"/>
-    <LIBPATH value="C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <INCLUDEPATH value="additions;&quot;C:\Program Files\Borland\CBuilder6\Projects&quot;;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="additions;&quot;C:\Program Files\Borland\CBuilder6\Projects&quot;;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib"/>
     <WARNINGS value="-w-par"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-IC:\Myprogs\CBuilder6\Examples\OpenGL\Drawing 
+    <IDLCFLAGS value="-Iadditions -I&quot;C:\Program Files\Borland\CBuilder6\Projects&quot; 
+      -IC:\Myprogs\CBuilder6\Examples\OpenGL\Drawing 
       -IC:\Myprogs\CBuilder6\Projects 
       -ID:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1 -I$(BCB)\include 
       -I$(BCB)\include\vcl -src_suffix cpp -boa"/>
@@ -57,9 +53,10 @@
   <FILELIST>
       <FILE FILENAME="EyesGuard.res" FORMNAME="" UNITNAME="EyesGuard.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="EyesGuard.cpp" FORMNAME="" UNITNAME="EyesGuard" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="MainForm.cpp" FORMNAME="MainWnd" UNITNAME="MainForm" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="InputOutput.cpp" FORMNAME="" UNITNAME="InputOutput" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="BreakForm.cpp" FORMNAME="BreakWnd" UNITNAME="BreakForm" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MainWnd_Unit.cpp" FORMNAME="MainWnd" UNITNAME="MainWnd_Unit" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BreakWnd_Unit.cpp" FORMNAME="BreakWnd" UNITNAME="BreakWnd_Unit" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="EyesGuard.todo" FORMNAME="" UNITNAME="EyesGuard.todo" CONTAINERID="ToDo" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ProgramState.cpp" FORMNAME="" UNITNAME="ProgramState" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -92,23 +89,26 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 
-[Excluded Packages]
-c:\myprogs\cbuilder6\Bin\dclite60.bpl=Borland Integrated Translation Environment
-
 [HistoryLists\hlIncludePath]
-Count=1
-Item0=C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl
+Count=3
+Item0=additions;C:\Program Files\Borland\CBuilder6\Projects;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl
+Item1=C:\Program Files\Borland\CBuilder6\Projects;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl
+Item2=C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\include;$(BCB)\include\vcl
 
 [HistoryLists\hlLibraryPath]
-Count=1
-Item0=C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib
+Count=3
+Item0=additions;C:\Program Files\Borland\CBuilder6\Projects;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib
+Item1=C:\Program Files\Borland\CBuilder6\Projects;C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib
+Item2=C:\Myprogs\CBuilder6\Examples\OpenGL\Drawing;C:\Myprogs\CBuilder6\Projects;D:\workbook\IntInf\EyesProject\EyesGuard\EyesGuard1.1;$(BCB)\lib\obj;$(BCB)\lib
 
 [HistoryLists\hlDebugSourcePath]
-Count=1
-Item0=$(BCB)\source\vcl
+Count=3
+Item0=$(BCB)\source\vcl;C:\Users\root\Desktop\EyesGuard\v2.00\additions\;C:\Users\root\Desktop\EyesGuard\v2.00\additions\
+Item1=$(BCB)\source\vcl;C:\Users\root\Desktop\EyesGuard\v2.00\additions\
+Item2=$(BCB)\source\vcl
 
 [Debugging]
-DebugSourceDirs=$(BCB)\source\vcl
+DebugSourceDirs=$(BCB)\source\vcl;C:\Users\root\Desktop\EyesGuard\v2.00\additions\;C:\Users\root\Desktop\EyesGuard\v2.00\additions\
 
 [Parameters]
 RunParams=
@@ -131,5 +131,10 @@ LinkCGLIB=0
 AddServerUnit=1
 AddClientUnit=1
 PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
   </IDEOPTIONS>
 </PROJECT>

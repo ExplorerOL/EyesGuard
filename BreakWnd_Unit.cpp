@@ -27,47 +27,41 @@
 
 #include <vcl.h>
 #pragma hdrstop
+
+#include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
-USEFORM("MainWnd_Unit.cpp", MainWnd);
-USEFORM("BreakWnd_Unit.cpp", BreakWnd);
+#pragma package(smart_init)
+#pragma link "CGAUGES"
+#pragma resource "*.dfm"
+TBreakWnd *BreakWnd;
+
 //---------------------------------------------------------------------------
-WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+//Конструктор формы
+__fastcall TBreakWnd::TBreakWnd(TComponent* Owner)
+        : TForm(Owner)
 {
-        try
-         {
 
-
-		HANDLE* EGMutex;
-		*EGMutex = CreateMutex(NULL, true, "EGMutex");
-		if (GetLastError()==ERROR_ALREADY_EXISTS)
-    		    {
-  		      ShowMessage("Can't start second copy of EyesGuard!");
-  		      Application->Terminate();
-  		    }
-
-                Application->Initialize();
-                Application->ShowMainForm = false;
-                Application->Title = "EyesGuard";
-                Application->CreateForm(__classid(TMainWnd), &MainWnd);
-		Application->Run();
-         }
-
-
-        catch (Exception &exception)
-        {
-                 Application->ShowException(&exception);
-        }
-        catch (...)
-        {
-                 try
-                 {
-                         throw Exception("");
-                 }
-                 catch (Exception &exception)
-                 {
-                        Application->ShowException(&exception);
-                 }
-        }
-        return 0;
 }
 //---------------------------------------------------------------------------
+
+//Действия при закрытии формы
+void __fastcall TBreakWnd::FormClose(TObject *Sender, TCloseAction &Action)
+{
+ EGState.interruptBreak();
+}
+//---------------------------------------------------------------------------
+
+//Перевод фокуса на форму перерыва, он не остался на предыдущем приложении
+
+void __fastcall TBreakWnd::FormShow(TObject *Sender)
+{
+ SetFocus();
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
+
+

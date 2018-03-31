@@ -25,49 +25,65 @@
 
 //---------------------------------------------------------------------------
 
-#include <vcl.h>
-#pragma hdrstop
+#ifndef ProgramStateH
+#define ProgramStateH
+#include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
-USEFORM("MainWnd_Unit.cpp", MainWnd);
-USEFORM("BreakWnd_Unit.cpp", BreakWnd);
-//---------------------------------------------------------------------------
-WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
-{
-        try
-         {
+#define setfileName "set.dat"
+#define setfileDir  "."
+#define setfilePath     setfileDir "\\" setfileName
 
 
-		HANDLE* EGMutex;
-		*EGMutex = CreateMutex(NULL, true, "EGMutex");
-		if (GetLastError()==ERROR_ALREADY_EXISTS)
-    		    {
-  		      ShowMessage("Can't start second copy of EyesGuard!");
-  		      Application->Terminate();
-  		    }
 
-                Application->Initialize();
-                Application->ShowMainForm = false;
-                Application->Title = "EyesGuard";
-                Application->CreateForm(__classid(TMainWnd), &MainWnd);
-		Application->Run();
-         }
+//Структура, хранящая настройки программы
+struct Settings{
+unsigned char timeWork;
+unsigned char timeBreak;
+bool monitorUserActivity;
+bool soundOn;
+bool programTurnedOff;
+};
 
 
-        catch (Exception &exception)
-        {
-                 Application->ShowException(&exception);
-        }
-        catch (...)
-        {
-                 try
-                 {
-                         throw Exception("");
-                 }
-                 catch (Exception &exception)
-                 {
-                        Application->ShowException(&exception);
-                 }
-        }
-        return 0;
-}
-//---------------------------------------------------------------------------
+//Класс, описыв-й состояние программы
+
+class ProgramState {
+
+public:
+	ProgramState();
+        Settings getSettings();
+        void setSettings(const Settings& newSettings);
+	void timerTick();
+        void takeBreak();
+        void resetCounterTimeWork();
+        TDateTime getTimeWorkLeft();
+        TDateTime getTimeBreakLeft();
+        void interruptBreak();
+
+
+private:
+      	Settings EGSettings;
+        unsigned counterTimeWork;
+        unsigned counterTimeBreak;
+        bool breakInProgress;
+        bool bUserActive;
+
+
+        void readSettings();
+        void writeSettings();
+	bool checkSettings(const Settings& settingsToCheck);
+
+        void workTick();
+        void breakTick();
+
+
+};
+
+
+extern ProgramState EGState;
+
+
+
+#endif
+
+
