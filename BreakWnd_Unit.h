@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы                                                     *
+* Сайт программы http://eyesguard.ru                                 *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
@@ -33,15 +33,16 @@
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
 #include "MainWnd_Unit.h"
+#include "CGAUGES.h"
 //---------------------------------------------------------------------------
 class TBreakWnd : public TForm
 {
 __published:	// IDE-managed Components
         TLabel *BreakLabel1;
         TLabel *BreakLabel2;
+	TLabel *LabelTimeBreakLeft;
+	TCGauge *GaugeBreakProgress;
         void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
-        void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift,
-          int X, int Y);
         void __fastcall FormShow(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
@@ -49,6 +50,7 @@ public:		// User declarations
 
 };
 //---------------------------------------------------------------------------
-//extern PACKAGE TBreakWnd *BreakWnd;
+
+
 //---------------------------------------------------------------------------
 #endif

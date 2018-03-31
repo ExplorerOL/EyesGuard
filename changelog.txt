@@ -1,3 +1,9 @@
+v1.30 (31.03.2018)
++removed not useful option "Turn monitor off"
++program refactoring
++added progress bar and left time at BreakWnd
++added activity monitoring option with hint
+
 v1.20 (01.03.2018)
 +fixed bug of timer reset after main window closing
 +removed unnecessary buttons

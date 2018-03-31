@@ -1,10 +1,12 @@
 object BreakWnd: TBreakWnd
-  Left = 167
-  Top = 125
+  Left = 412
+  Top = 0
+  AlphaBlend = True
+  AlphaBlendValue = 215
   BorderStyle = bsNone
   Caption = 'BreakWnd'
-  ClientHeight = 291
-  ClientWidth = 473
+  ClientHeight = 838
+  ClientWidth = 1436
   Color = clBlack
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,32 +18,32 @@ object BreakWnd: TBreakWnd
   Visible = True
   WindowState = wsMaximized
   OnClose = FormClose
-  OnMouseMove = FormMouseMove
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object BreakLabel1: TLabel
     Left = 0
     Top = 0
-    Width = 473
+    Width = 1436
     Height = 136
     Align = alTop
     Alignment = taCenter
     AutoSize = False
     Caption = #1055#1045#1056#1045#1056#1067#1042'!!!'
+    Color = clBlack
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clLime
     Font.Height = -25
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
     Layout = tlBottom
-    OnMouseMove = FormMouseMove
   end
   object BreakLabel2: TLabel
     Left = 0
     Top = 136
-    Width = 473
+    Width = 1436
     Height = 145
     Align = alTop
     Alignment = taCenter
@@ -57,6 +59,38 @@ object BreakWnd: TBreakWnd
     ParentFont = False
     Transparent = True
     Layout = tlCenter
-    OnMouseMove = FormMouseMove
+  end
+  object LabelTimeBreakLeft: TLabel
+    Left = 0
+    Top = 798
+    Width = 1436
+    Height = 40
+    Align = alBottom
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'XX:XX:XX'
+    Color = clBtnFace
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clYellow
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    Transparent = True
+    Layout = tlCenter
+  end
+  object GaugeBreakProgress: TCGauge
+    Left = 0
+    Top = 773
+    Width = 1436
+    Height = 25
+    Align = alBottom
+    Anchors = [akRight, akBottom]
+    Color = clGreen
+    ShowText = False
+    ForeColor = clGreen
+    BackColor = clSilver
+    ParentColor = False
   end
 end

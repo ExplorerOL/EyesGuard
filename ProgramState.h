@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы                                                     *
+* Сайт программы http://eyesguard.ru                                 *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
@@ -25,20 +25,65 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef InputOutputH
-#define InputOutputH
+#ifndef ProgramStateH
+#define ProgramStateH
+#include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
-#include <io.h>
-#include <fcntl.h>
-#include <sys\stat.h>
-#include <string.h>
-#include "MainWnd_Unit.h"
+#define setfileName "set.dat"
+#define setfileDir  "."
+#define setfilePath     setfileDir "\\" setfileName
 
 
 
-void ReadSettings();
-void WriteSettings();
-void UpdateWndSet();
-bool UpdateProgramSet();
-void CloseWarningMsg();
+//Структура, хранящая настройки программы
+struct Settings{
+unsigned char timeWork;
+unsigned char timeBreak;
+bool monitorUserActivity;
+bool soundOn;
+bool programTurnedOff;
+};
+
+
+//Класс, описыв-й состояние программы
+
+class ProgramState {
+
+public:
+	ProgramState();
+        Settings getSettings();
+        void setSettings(const Settings& newSettings);
+	void timerTick();
+        void takeBreak();
+        void resetCounterTimeWork();
+        TDateTime getTimeWorkLeft();
+        TDateTime getTimeBreakLeft();
+        void interruptBreak();
+
+
+private:
+      	Settings EGSettings;
+        unsigned counterTimeWork;
+        unsigned counterTimeBreak;
+        bool breakInProgress;
+        bool bUserActive;
+
+
+        void readSettings();
+        void writeSettings();
+	bool checkSettings(const Settings& settingsToCheck);
+
+        void workTick();
+        void breakTick();
+
+
+};
+
+
+extern ProgramState EGState;
+
+
+
 #endif
+
+

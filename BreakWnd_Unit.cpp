@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы                                                     *
+* Сайт программы http://eyesguard.ru                                 *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
@@ -31,8 +31,9 @@
 #include "BreakWnd_Unit.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "CGAUGES"
 #pragma resource "*.dfm"
-//TBreakWnd *BreakWnd;
+TBreakWnd *BreakWnd;
 
 //---------------------------------------------------------------------------
 //Конструктор формы
@@ -42,30 +43,25 @@ __fastcall TBreakWnd::TBreakWnd(TComponent* Owner)
 
 }
 //---------------------------------------------------------------------------
-//Действия при закрытии формы
 
+//Действия при закрытии формы
 void __fastcall TBreakWnd::FormClose(TObject *Sender, TCloseAction &Action)
 {
- MainWnd->IsBreakNow = true;
- MainWnd->IsWarningNow = true;
- MainWnd->MainTimerTimer(this);
+ EGState.interruptBreak();
 }
 //---------------------------------------------------------------------------
-//Включение монитора при движении мыши, если он был выключен
 
-void __fastcall TBreakWnd::FormMouseMove(TObject *Sender,
-      TShiftState Shift, int X, int Y)
-{
- if ((MainWnd->EnMonOff) && (MainWnd->IsBreakNow))
-        SendMessage(Handle,WM_SYSCOMMAND,SC_MONITORPOWER,-1);
-}
-//---------------------------------------------------------------------------
 //Перевод фокуса на форму перерыва, он не остался на предыдущем приложении
 
 void __fastcall TBreakWnd::FormShow(TObject *Sender)
 {
- SetFocus();        
+ SetFocus();
 }
 //---------------------------------------------------------------------------
+
+
+
+
+
 
 

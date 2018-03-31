@@ -3,7 +3,7 @@
 *                                                                    *
 * EyesGuard - программа для тех, кто хочет сохранить свое зрение,    *
 *             работая на компьютере.                                 *
-* Сайт программы                                                     *
+* Сайт программы http://eyesguard.ru                                 *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2011,                 *
 *    © Буряков Михаил   (mihail.buryakov@gmail.com), 2012,           *
 *    © Воробьев Дмитрий (eyesguard@yandex.ru), 2018.                 *
@@ -31,28 +31,28 @@
 USEFORM("MainWnd_Unit.cpp", MainWnd);
 USEFORM("BreakWnd_Unit.cpp", BreakWnd);
 //---------------------------------------------------------------------------
-//Функция WinMain, начало программы
-
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
         try
          {
 
 
-HANDLE* EGMutex;
-*EGMutex = CreateMutex(NULL, true, "EGMutex");
-if (GetLastError()==ERROR_ALREADY_EXISTS)
-        {
-        ShowMessage("Копия данного приложения уже запущена!");
-        Application->Terminate();
-        }
-                 Application->Initialize();
-                 Application->ShowMainForm = false;
-                 Application->Title = "EyesGuard";
-                 Application->CreateForm(__classid(TMainWnd), &MainWnd);
-                 Application->Run();
+		HANDLE* EGMutex;
+		*EGMutex = CreateMutex(NULL, true, "EGMutex");
+		if (GetLastError()==ERROR_ALREADY_EXISTS)
+    		    {
+  		      ShowMessage("Копия данного приложения уже запущена!");
+  		      Application->Terminate();
+  		    }
 
-        }
+                Application->Initialize();
+                Application->ShowMainForm = false;
+                Application->Title = "EyesGuard";
+                Application->CreateForm(__classid(TMainWnd), &MainWnd);
+		Application->Run();
+         }
+
+
         catch (Exception &exception)
         {
                  Application->ShowException(&exception);

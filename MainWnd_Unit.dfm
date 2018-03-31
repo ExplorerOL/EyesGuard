@@ -1,11 +1,11 @@
 object MainWnd: TMainWnd
-  Left = 618
-  Top = 503
+  Left = 570
+  Top = 318
   HorzScrollBar.Visible = False
   AlphaBlendValue = 215
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'EyesGuard v1.20'
+  Caption = 'EyesGuard v1.30'
   ClientHeight = 288
   ClientWidth = 354
   Color = clBtnFace
@@ -1742,7 +1742,7 @@ object MainWnd: TMainWnd
     Top = 40
     Width = 321
     Height = 81
-    TabOrder = 8
+    TabOrder = 7
     object TimeWorkLabel: TLabel
       Left = 24
       Top = 11
@@ -1844,7 +1844,7 @@ object MainWnd: TMainWnd
   end
   object CheckSound: TCheckBox
     Left = 23
-    Top = 166
+    Top = 174
     Width = 194
     Height = 23
     Caption = #1047#1074#1091#1082#1086#1074#1086#1077' '#1086#1087#1086#1074#1077#1097#1077#1085#1080#1077
@@ -1861,7 +1861,7 @@ object MainWnd: TMainWnd
   end
   object CheckOff: TCheckBox
     Left = 23
-    Top = 200
+    Top = 208
     Width = 170
     Height = 23
     Caption = #1042#1099#1082#1083#1102#1095#1080#1090#1100
@@ -1872,21 +1872,6 @@ object MainWnd: TMainWnd
     Font.Style = []
     ParentFont = False
     TabOrder = 5
-    OnEnter = CheckOffEnter
-  end
-  object CheckEnMonOff: TCheckBox
-    Left = 23
-    Top = 132
-    Width = 356
-    Height = 23
-    Caption = #1042#1099#1082#1083#1102#1095#1072#1090#1100'  '#1084#1086#1085#1080#1090#1086#1088' '#1085#1072' '#1074#1088#1077#1084#1103' '#1087#1077#1088#1077#1088#1099#1074#1072
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 6
     OnEnter = CheckOffEnter
   end
   object ButHide: TButton
@@ -1901,8 +1886,25 @@ object MainWnd: TMainWnd
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 6
     OnClick = ButHideClick
+  end
+  object CheckActivity: TCheckBox
+    Left = 23
+    Top = 142
+    Width = 194
+    Height = 23
+    Caption = #1054#1090#1089#1083#1077#1078#1080#1074#1072#1090#1100' '#1072#1082#1090#1080#1074#1085#1086#1089#1090#1100
+    Checked = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    State = cbChecked
+    TabOrder = 8
+    OnEnter = CheckActivityEnter
   end
   object TrayIcon: TTrayIcon
     Visible = True
@@ -4081,7 +4083,6 @@ object MainWnd: TMainWnd
     end
   end
   object MainTimer: TTimer
-    Interval = 0
     OnTimer = MainTimerTimer
     Left = 80
     Top = 8
