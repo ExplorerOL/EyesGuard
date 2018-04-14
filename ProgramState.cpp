@@ -113,30 +113,38 @@ void ProgramState::timerTick()
 {
    //Если выбрана опция отслеживать активность пользователя  и нет перерыва, то проверить
    //когда была последняя активность
-   if ( EGState.EGSettings.monitorUserActivity && (!breakInProgress) && (counterTimeWork > 15) )
+   if ( EGSettings.monitorUserActivity && (!breakInProgress) && (counterTimeWork > 15) )
      {
 
 	//Определяем, активен ли пользователь. Если нет, то ничего не делаем
-        DWORD dwTime;
+        DWORD dwTimeOSWorking, notActiveTime;
         LASTINPUTINFO  liiStruct;
         liiStruct.cbSize = sizeof(liiStruct);
 
 
         GetLastInputInfo(&liiStruct);  //время последней активности
-        dwTime = GetTickCount();       //время с момента работы оп. системы
+        dwTimeOSWorking = GetTickCount();       //время с момента работы оп. системы
+        notActiveTime = dwTimeOSWorking-liiStruct.dwTime;  //время бездействия пользователя
 
-        if (dwTime-liiStruct.dwTime > 120000)  //проверяем разницу
+        if (notActiveTime > 120000)  //проверяем разницу времени
            {
-
+                //пользователь активен
          	bUserActive = false;
                 MainWnd->ShowHintMessage();
            }
         else
            {
-            bUserActive = true;
-            MainWnd->HideHintMessage();
+                //пользователь не активен
+           	bUserActive = true;
+            	MainWnd->HideHintMessage();
            }
-     }
+
+       //Если пользователь не активен более времени перерыва, то обнуляем счетчик работы
+        if ( !bUserActive && (notActiveTime > EGSettings.timeBreak*60000) )
+        	counterTimeWork = 16;
+
+
+       }
 
         //Если пользователь активен, то выполняем обработку события таймера
      if (!breakInProgress && bUserActive && !EGSettings.programTurnedOff) workTick();
@@ -285,13 +293,13 @@ void ProgramState::workTick()
 
 
      //Три звуковых сигнала, затем открытие окна перерыва
-     if (counterTimeWork == (EGSettings.timeWork*60-2) )
+     if ( (counterTimeWork == (EGSettings.timeWork*60-2) ) && EGSettings.soundOn )
        	Beep(1000,100);
-     if (counterTimeWork == (EGSettings.timeWork*60-1) )
+     if ( (counterTimeWork == (EGSettings.timeWork*60-1) ) && EGSettings.soundOn )
        	Beep(1000,100);
      if (counterTimeWork >= (EGSettings.timeWork*60) )
        	{
-        Beep(1000,500);
+        if (EGSettings.soundOn) Beep(1000,500);
         if (BreakWnd == NULL)
      		{
 	         BreakWnd = new TBreakWnd( Application );
@@ -315,12 +323,12 @@ void ProgramState::breakTick()
 
 
      //Три звуковых сигнала, затем открытие окна перерыва
-     if (counterTimeBreak == (EGSettings.timeBreak*60-1) )
+     if ( (counterTimeBreak == (EGSettings.timeBreak*60-1) ) && EGSettings.soundOn )
        	Beep(1000,500);
 
-     if (counterTimeBreak >= (EGSettings.timeBreak*60) )
+     if  (counterTimeBreak >= (EGSettings.timeBreak*60) )
        	{
-        Beep(1000,500);
+        if (EGSettings.soundOn)   Beep(1000,500);
         if (BreakWnd != NULL)
      		{
 	         delete BreakWnd;
